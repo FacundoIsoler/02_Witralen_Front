@@ -1,36 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import useBrandStore from '../../../stores/adminStores/brandStore';
 import styles from './Brands.module.css';
 
 function Brands() {
-    const [brands, setbrands] = useState([
-        { id: 1, name: 'Aire acondicionado' },
-        { id: 2, name: 'Motor yamaha' },
-        { id: 3, name: 'Bujía' },
-    ]);
+    const { brands, brandList, loading, error } = useBrandStore();
 
-    const [newbrand, setNewbrand] = useState('');
+    useEffect(() => {
+        brandList(); 
+    }, [brandList]);
 
-    const handleDelete = (id) => {
-        setbrands(brands.filter((brand) => brand.id !== id));
-    };
+    // const handleDelete = (id) => {
+    //     setbrands(brands.filter((brand) => brand.id !== id));
+    // };
 
-    const handleEdit = (id) => {
-        const brandName = prompt('Edit brand name:', brands.find((p) => p.id === id).name);
-        if (brandName) {
-            setbrands(
-                brands.map((brand) =>
-                    brand.id === id ? { ...brand, name: brandName } : brand
-                )
-            );
-        }
-    };
+    // const handleEdit = (id) => {
+    //     const brandName = prompt('Edit brand name:', brands.find((p) => p.id === id).name);
+    //     if (brandName) {
+    //         setbrands(
+    //             brands.map((brand) =>
+    //                 brand.id === id ? { ...brand, name: brandName } : brand
+    //             )
+    //         );
+    //     }
+    // };
 
-    const handleAddbrand = () => {
-        if (newbrand.trim()) {
-            setbrands([...brands, { id: Date.now(), name: newbrand }]);
-            setNewbrand('');
-        }
-    };
+    // const handleAddbrand = () => {
+    //     if (newbrand.trim()) {
+    //         setbrands([...brands, { id: Date.now(), name: newbrand }]);
+    //         setNewbrand('');
+    //     }
+    // };
+
+    if (loading) {
+        return <div>Cargando productos...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <div className={styles.container}>
@@ -53,12 +60,12 @@ function Brands() {
             <div className={styles.addbrand}>
                 <input
                     type="text"
-                    value={newbrand}
-                    onChange={(e) => setNewbrand(e.target.value)}
+                    // value={newbrand}
+                    // onChange={(e) => setNewbrand(e.target.value)}
                     placeholder="Nuevo brando"
                     className={styles.input}
                 />
-                <button onClick={handleAddbrand} className={styles.addBtn}>Añadir</button>
+                {/* <button onClick={handleAddbrand} className={styles.addBtn}>Añadir</button> */}
             </div>
         </div>
     );

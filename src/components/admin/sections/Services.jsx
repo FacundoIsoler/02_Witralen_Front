@@ -1,36 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect} from 'react';
+import useServiceStore from '../../../stores/adminStores/serviceStore';
 import styles from './Services.module.css';
 
 function Services() {
-    const [services, setServices] = useState([
-        { id: 1, name: 'Aire acondicionado' },
-        { id: 2, name: 'Motor yamaha' },
-        { id: 3, name: 'Bujía' },
-    ]);
+    const { services, serviceList, loading, error } = useServiceStore();
 
-    const [newService, setNewService] = useState('');
+    useEffect(() => {
+        serviceList(); 
+    }, [serviceList]);
 
-    const handleDelete = (id) => {
-        setServices(services.filter((service) => service.id !== id));
-    };
+    // const handleDelete = (id) => {
+    //     setServices(services.filter((service) => service.id !== id));
+    // };
 
-    const handleEdit = (id) => {
-        const serviceName = prompt('Edit service name:', services.find((p) => p.id === id).name);
-        if (serviceName) {
-            setServices(
-                services.map((service) =>
-                    service.id === id ? { ...service, name: serviceName } : service
-                )
-            );
-        }
-    };
+    // const handleEdit = (id) => {
+    //     const serviceName = prompt('Edit service name:', services.find((p) => p.id === id).name);
+    //     if (serviceName) {
+    //         setServices(
+    //             services.map((service) =>
+    //                 service.id === id ? { ...service, name: serviceName } : service
+    //             )
+    //         );
+    //     }
+    // };
 
-    const handleAddService = () => {
-        if (newService.trim()) {
-            setServices([...services, { id: Date.now(), name: newService }]);
-            setNewService('');
-        }
-    };
+    // const handleAddService = () => {
+    //     if (newService.trim()) {
+    //         setServices([...services, { id: Date.now(), name: newService }]);
+    //         setNewService('');
+    //     }
+    // };
+
+    if (loading) {
+        return <div>Cargando productos...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <div className={styles.container}>
@@ -53,12 +60,12 @@ function Services() {
             <div className={styles.addService}>
                 <input
                     type="text"
-                    value={newService}
-                    onChange={(e) => setNewService(e.target.value)}
+                    // value={newService}
+                    // onChange={(e) => setNewService(e.target.value)}
                     placeholder="Nuevo serviceo"
                     className={styles.input}
                 />
-                <button onClick={handleAddService} className={styles.addBtn}>Añadir</button>
+                {/* <button onClick={handleAddService} className={styles.addBtn}>Añadir</button> */}
             </div>
         </div>
     );

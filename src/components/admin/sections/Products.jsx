@@ -1,36 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import useProductStore from '../../../stores/adminStores/productStore';
 import styles from './Products.module.css';
 
 function Products() {
-    const [products, setProducts] = useState([
-        { id: 1, name: 'Aire acondicionado' },
-        { id: 2, name: 'Motor yamaha' },
-        { id: 3, name: 'Bujía' },
-    ]);
+    const { products, productList, loading, error } = useProductStore();
 
-    const [newProduct, setNewProduct] = useState('');
+    useEffect(() => {
+        productList(); 
+    }, [productList]);
 
-    const handleDelete = (id) => {
-        setProducts(products.filter((product) => product.id !== id));
-    };
 
-    const handleEdit = (id) => {
-        const productName = prompt('Edit product name:', products.find((p) => p.id === id).name);
-        if (productName) {
-            setProducts(
-                products.map((product) =>
-                    product.id === id ? { ...product, name: productName } : product
-                )
-            );
-        }
-    };
+    // const handleDelete = (id) => {
+    //     setProducts(products.filter((product) => product.id !== id));
+    // };
 
-    const handleAddProduct = () => {
-        if (newProduct.trim()) {
-            setProducts([...products, { id: Date.now(), name: newProduct }]);
-            setNewProduct('');
-        }
-    };
+    // const handleEdit = (id) => {
+    //     const productName = prompt('Edit product name:', products.find((p) => p.id === id).name);
+    //     if (productName) {
+    //         setProducts(
+    //             products.map((product) =>
+    //                 product.id === id ? { ...product, name: productName } : product
+    //             )
+    //         );
+    //     }
+    // };
+
+    // const handleAddProduct = () => {
+    //     if (newProduct.trim()) {
+    //         setProducts([...products, { id: Date.now(), name: newProduct }]);
+    //         setNewProduct('');
+    //     }
+    // };
+
+    if (loading) {
+        return <div>Cargando productos...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <div className={styles.container}>
@@ -53,12 +61,12 @@ function Products() {
             <div className={styles.addProduct}>
                 <input
                     type="text"
-                    value={newProduct}
-                    onChange={(e) => setNewProduct(e.target.value)}
+                    // value={newProduct}
+                    // onChange={(e) => setNewProduct(e.target.value)}
                     placeholder="Nuevo producto"
                     className={styles.input}
                 />
-                <button onClick={handleAddProduct} className={styles.addBtn}>Añadir</button>
+                {/* <button onClick={handleAddProduct} className={styles.addBtn}>Añadir</button> */}
             </div>
         </div>
     );

@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logInUser } from '../../actions/loginActions.js';
 import styles from "./Login.module.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import logo from '../../assets/logo/logoBlanco.png';
+import useAuthStore from "../../stores/authStore"
 
 const MySwal = withReactContent(Swal);
 
 function Login() {
+    const {
+        email, 
+        setEmail, 
+        password, 
+        setPassword, 
+        login, 
+        loading, 
+        error 
+    } = useAuthStore();
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -23,12 +29,11 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const userData = { email, password };
 
         try {
-            const response = await dispatch(logInUser(userData));
-            if (response.payload) {
-                navigate('/');
+            await login();
+            if (!error) {
+                navigate('/admin');
             } else {
                 MySwal.fire({
                     icon: "error",
@@ -81,7 +86,7 @@ function Login() {
                     ¿Olvidaste tu contraseña?
                 </a>
                 <button type="submit" className={styles.loginButton}>
-                    Iniciar Sesión
+                {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
                 </button>
             </form>
         </div>
