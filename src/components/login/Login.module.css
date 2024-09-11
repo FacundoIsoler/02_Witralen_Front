@@ -1,0 +1,217 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(180deg, #FFFFFF 0%, #ED772F 100%);
+}
+
+.logo img {
+    width: 300px;
+    margin-bottom: 3rem;
+}
+
+.form {
+    width: 500px;
+    text-align: center;
+}
+
+.input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+}
+
+.input:focus {
+    border-color: #ffffff;
+}
+
+
+.passwordContainer {
+    position: relative;
+    width: 100%;
+}
+
+.showPasswordButton {
+    position: absolute;
+    top: 25%;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.forgotPassword {
+    display: block;
+    font-size: 14px;
+    color: white;
+    margin-bottom: 20px;
+    text-decoration: none;
+    text-align: left;
+}
+
+.forgotPassword:hover {
+    text-decoration: underline;
+}
+
+.loginButton {
+    background-color: #FF6A00;
+    color: white;
+    padding: 10px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 50%;
+    font-size: 18px;
+    position: relative;
+}
+
+.loginButton:hover {
+    background-color: #ED772F;
+}
+
+
+
+
+
+
+
+
+
+/* ---------------------Media Queries--------------------------------*/
+
+
+
+
+/* Pantallas grandes y ultra grandes - a partir de 1920px */
+@media (min-width: 1920px) {
+    .logo img {
+        width: 350px;
+    }
+
+    .form {
+        width: 600px;
+    }
+
+    .input, .loginButton {
+        font-size: 20px;
+    }
+
+    .loginButton {
+        width: 40%;
+    }
+}
+
+/* Pantallas medianas - hasta 1440px */
+@media (max-width: 1440px) {
+    .logo img {
+        width: 300px;
+    }
+
+    .form {
+        width: 450px;
+    }
+
+    .input, .loginButton {
+        font-size: 18px;
+    }
+
+    .loginButton {
+        width: 50%;
+    }
+}
+
+/* Pantallas medianas - hasta 1250px */
+@media (max-width: 1250px) {
+    .logo img {
+        width: 280px;
+    }
+
+    .form {
+        width: 400px;
+    }
+
+    .input, .loginButton {
+        font-size: 16px;
+    }
+
+    .loginButton {
+        width: 60%;
+    }
+}
+
+/* Pantallas pequeñas - hasta 850px */
+@media (max-width: 850px) {
+    .logo img {
+        width: 250px;
+    }
+
+    .form {
+        width: 90%;
+    }
+
+    .input, .loginButton {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .loginButton {
+        width: 100%;
+    }
+}
+
+/* Pantallas extra pequeñas - hasta 480px */
+@media (max-width: 480px) {
+    .logo img {
+        width: 200px;
+    }
+
+    .form {
+        width: 95%;
+    }
+
+    .input, .loginButton {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .loginButton {
+        width: 100%;
+    }
+}
+
+/* Monitores en orientación vertical - con altura máxima de 768px */
+@media (max-height: 768px) and (orientation: portrait) {
+    .container {
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .logo img {
+        width: 250px;
+    }
+
+    .form {
+        width: 90%;
+    }
+
+    .input, .loginButton {
+        font-size: 16px;
+    }
+}

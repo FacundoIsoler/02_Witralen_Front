@@ -1,0 +1,83 @@
+.container {
+    background-color: #EC671CCC;
+    border-radius: 8px;
+    padding: 20px;
+    width: 850px;
+    margin: 0 auto;
+}
+
+.title {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.serviceList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.serviceItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.serviceItem span {
+    font-size: 16px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.editBtn,
+.deleteBtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.editBtn:hover {
+    color: #2c7fdb;
+    /* Color de hover para editar */
+}
+
+.deleteBtn:hover {
+    color: #e63946;
+    /* Color de hover para eliminar */
+}
+
+.addService {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+.addBtn {
+    background-color: white;
+    color: #ff6f00;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.addBtn:hover {
+    background-color: #f2f2f2;
+}
