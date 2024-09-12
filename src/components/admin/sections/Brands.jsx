@@ -3,18 +3,21 @@ import useBrandStore from '../../../stores/adminStores/brandStore';
 import styles from './Brands.module.css';
 
 function Brands() {
-    const { brands, brandList, loading, error } = useBrandStore();
+    const { brands, brandList, deleteBrand, loading, error } = useBrandStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newBrand, setNewBrand] = useState("");
     const [selectedImages, setSelectedImages] = useState([]); 
+
 
     useEffect(() => {
         brandList();
     }, [brandList]);
 
-    if (loading) {
-        return <div>Cargando brandos...</div>;
-    }
+
+    const handleDelete = (id) => {
+        deleteBrand(id);
+    };
+
 
     if (error) {
         return <div>Error: {error}</div>;
@@ -52,7 +55,7 @@ function Brands() {
     };
 
     if (loading) {
-        return <div>Cargando brands...</div>;
+        return <div>Cargando marcas...</div>;
     }
 
     if (error) {

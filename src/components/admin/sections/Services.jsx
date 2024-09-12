@@ -3,19 +3,26 @@ import useServiceStore from '../../../stores/adminStores/serviceStore';
 import styles from './Services.module.css';
 
 function Services() {
-    const { services, serviceList, loading, error } = useServiceStore();
-    const [isModalOpen, setIsModalOpen] = useState(false);
+
+const { services, serviceList, deleteService, loading, error } = useServiceStore();
+const [isModalOpen, setIsModalOpen] = useState(false);
     const [newService, setNewService] = useState("");
     const [selectedImages, setSelectedImages] = useState([]);
     const [category, setCategory] = useState(""); 
     const [description, setDescription] = useState(""); 
 
+
     useEffect(() => {
         serviceList(); 
     }, [serviceList]);
 
+
     const handleAddService = () => {
         setIsModalOpen(true);
+    }
+
+    const handleDelete = (id) => {
+        deleteService(id);
     };
 
     const handleCloseModal = () => {

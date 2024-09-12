@@ -3,10 +3,12 @@ import useProductStore from '../../../stores/adminStores/productStore';
 import styles from './Products.module.css';
 
 function Products() {
-    const { products, productList, loading, error } = useProductStore();
+
+    const { products, productList, deleteProduct, loading, error } = useProductStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newProduct, setNewProduct] = useState("");
-    const [selectedImages, setSelectedImages] = useState([]); 
+    const [selectedImages, setSelectedImages] = useState([]);
+
 
     useEffect(() => {
         productList();
@@ -16,9 +18,15 @@ function Products() {
         setIsModalOpen(true);
     };
 
+
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedImages([]);
+    }
+    
+    const handleDelete = (id) => {
+        deleteProduct(id);
+
     };
 
     const handleSaveProduct = () => {
@@ -34,8 +42,8 @@ function Products() {
         const files = Array.from(event.target.files);
         setSelectedImages((prevImages) => [...prevImages, ...files]);
 
-            console.log('Imágenes seleccionadas:', selectedImages);
-;
+        console.log('Imágenes seleccionadas:', selectedImages);
+        ;
     };
 
     const handleRemoveImage = (index) => {
@@ -96,7 +104,7 @@ function Products() {
                             onChange={(e) => setNewProduct(e.target.value)}
                             className={styles.input}
                         />
-                        
+
                         <label>Ingresar Imagen</label>
                         <div className={styles.uploadWrapper}>
                             <input
