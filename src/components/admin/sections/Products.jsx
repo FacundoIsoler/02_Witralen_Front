@@ -1,36 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import useProductStore from '../../../stores/adminStores/productStore';
 import styles from './Products.module.css';
 
 function Products() {
     const { products, productList, loading, error } = useProductStore();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newProduct, setNewProduct] = useState("");
+    const [selectedImages, setSelectedImages] = useState([]); 
 
     useEffect(() => {
-        productList(); 
+        productList();
     }, [productList]);
 
+    const handleAddProduct = () => {
+        setIsModalOpen(true);
+    };
 
-    // const handleDelete = (id) => {
-    //     setProducts(products.filter((product) => product.id !== id));
-    // };
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedImages([]);
+    };
 
-    // const handleEdit = (id) => {
-    //     const productName = prompt('Edit product name:', products.find((p) => p.id === id).name);
-    //     if (productName) {
-    //         setProducts(
-    //             products.map((product) =>
-    //                 product.id === id ? { ...product, name: productName } : product
-    //             )
-    //         );
-    //     }
-    // };
+    const handleSaveProduct = () => {
+        if (newProduct.trim()) {
+            setProducts([...products, { id: Date.now(), name: newProduct, images: selectedImages }]);
+            setNewProduct('');
+            setSelectedImages([]);
+            setIsModalOpen(false);
+        }
+    };
 
-    // const handleAddProduct = () => {
-    //     if (newProduct.trim()) {
-    //         setProducts([...products, { id: Date.now(), name: newProduct }]);
-    //         setNewProduct('');
-    //     }
-    // };
+    const handleImageChange = (event) => {
+        const files = Array.from(event.target.files);
+        setSelectedImages((prevImages) => [...prevImages, ...files]);
+
+            console.log('Imágenes seleccionadas:', selectedImages);
+;
+    };
+
+    const handleRemoveImage = (index) => {
+        const updatedImages = selectedImages.filter((_, i) => i !== index);
+        setSelectedImages(updatedImages);
+    };
 
     if (loading) {
         return <div>Cargando productos...</div>;
@@ -42,32 +53,99 @@ function Products() {
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>Productos</h2>
+            <div className={styles.header}>
+                <h2 className={styles.title}>Productos</h2>
+                <div className={styles.addProduct}>
+                    <button onClick={handleAddProduct} className={styles.addBtn}>Añadir</button>
+                </div>
+            </div>
             <div className={styles.productList}>
                 {products.map((product) => (
                     <div key={product.id} className={styles.productItem}>
                         <span>{product.name}</span>
+                        {product.images && product.images.map((image, index) => (
+                            <img
+                                key={index}
+                                src={URL.createObjectURL(image)}
+                                alt={product.name}
+                                style={{ width: '50px', height: '50px', marginRight: '5px' }}
+                            />
+                        ))}
                         <div className={styles.actions}>
-                            <button onClick={() => handleEdit(product.id)} className={styles.editBtn}>
+                            <button className={styles.editBtn}>
                                 ✏️
                             </button>
-                            <button onClick={() => handleDelete(product.id)} className={styles.deleteBtn}>
+                            <button className={styles.deleteBtn}>
                                 🗑️
                             </button>
                         </div>
                     </div>
                 ))}
             </div>
-            <div className={styles.addProduct}>
-                <input
-                    type="text"
-                    // value={newProduct}
-                    // onChange={(e) => setNewProduct(e.target.value)}
-                    placeholder="Nuevo producto"
-                    className={styles.input}
-                />
-                {/* <button onClick={handleAddProduct} className={styles.addBtn}>Añadir</button> */}
-            </div>
+
+            {/* Modal */}
+            {isModalOpen && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal}>
+                        <button onClick={handleCloseModal} className={styles.closeBtn}>✖</button>
+                        <h2>Ingresar Producto</h2>
+                        <label>Nombre del Producto</label>
+                        <input
+                            type="text"
+                            value={newProduct}
+                            onChange={(e) => setNewProduct(e.target.value)}
+                            className={styles.input}
+                        />
+                        
+                        <label>Ingresar Imagen</label>
+                        <div className={styles.uploadWrapper}>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                multiple
+                                onChange={handleImageChange}
+                                className={styles.uploadInput}
+                                id="file-upload"
+                            />
+                            <label htmlFor="file-upload" className={styles.uploadBtn}>Seleccione imágenes</label>
+                        </div>
+
+                        {selectedImages.length > 0 && (
+                            <div className={styles.preview}>
+                                <p>Vista previa:</p>
+                                <div className={styles.imagePreviewContainer}>
+                                    {selectedImages.map((image, index) => (
+                                        <div key={index} className={styles.previewItem}>
+                                            <img
+                                                src={URL.createObjectURL(image)}
+                                                alt={`Vista previa ${index}`}
+                                                style={{ width: '100px', height: '100px' }}
+                                            />
+                                            <button
+                                                onClick={() => handleRemoveImage(index)}
+                                                className={styles.removeImageBtn}
+                                            >
+                                                ✖
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        <label>Ingresar Categoría</label>
+                        <select className={styles.select}>
+                            <option value="">Seleccione...</option>
+                            <option value="categoria1">Categoría 1</option>
+                            <option value="categoria2">Categoría 2</option>
+                        </select>
+
+                        <label>Descripción del Producto</label>
+                        <textarea className={styles.textarea}></textarea>
+
+                        <button onClick={handleSaveProduct} className={styles.saveBtn}>Aceptar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -9,14 +9,14 @@ const useBrandStore = create((set, get) => ({
     brandList: async () => {
         set({ loading: true, error: null });
         try {
-            console.log("Intentando obtener las Marcas");
+            // console.log("Intentando obtener las Marcas");
 
             const response = await axios.get(
                 "http://localhost:3000/brand/showBrands",
             );
 
             set({ brands: response.data, error: null });
-            console.log("Marcas obtenidos exitosamente");
+            // console.log("Marcas obtenidos exitosamente");
         } catch (error) {
             if (error.response) {
                 console.error("Error al obtener Marcas:", error.response.data);

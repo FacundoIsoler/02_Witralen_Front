@@ -9,14 +9,14 @@ const useServiceStore = create((set, get) => ({
     serviceList: async () => {
         set({ loading: true, error: null });
         try {
-            console.log("Intentando obtener Servicios");
+            // console.log("Intentando obtener Servicios");
 
             const response = await axios.post(
                 "http://localhost:3000/service/showServices",
             );
 
             set({ services: response.data, error: null });
-            console.log("Servicios obtenidos exitosamente");
+            // console.log("Servicios obtenidos exitosamente");
         } catch (error) {
             if (error.response) {
                 console.error("Error al obtener Servicios:", error.response.data);

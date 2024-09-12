@@ -12,7 +12,7 @@ import './app.css';
 function App() {
   return (
     <BrowserRouter>
-      <div className="container">
+      <div className="AppContainer">
         <Routes>
           {/* general */}
           <Route path="/login" element={<Login />} />

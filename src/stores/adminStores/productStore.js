@@ -9,14 +9,14 @@ const useProductStore = create((set, get) => ({
     productList: async () => {
         set({ loading: true, error: null });
         try {
-            console.log("Intentando obtener los productos");
+            // console.log("Intentando obtener los productos");
 
             const response = await axios.post(
                 "http://localhost:3000/product/showProducts",
             );
 
             set({ products: response.data, error: null });
-            console.log("Productos obtenidos exitosamente");
+            // console.log("Productos obtenidos exitosamente");
         } catch (error) {
             if (error.response) {
                 console.error("Error al obtener productos:", error.response.data);
