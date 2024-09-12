@@ -3,15 +3,15 @@ import useServiceStore from '../../../stores/adminStores/serviceStore';
 import styles from './Services.module.css';
 
 function Services() {
-    const { services, serviceList, loading, error } = useServiceStore();
+    const { services, serviceList, deleteService, loading, error } = useServiceStore();
 
     useEffect(() => {
         serviceList(); 
     }, [serviceList]);
 
-    // const handleDelete = (id) => {
-    //     setServices(services.filter((service) => service.id !== id));
-    // };
+    const handleDelete = (id) => {
+        deleteService(id);
+    };
 
     // const handleEdit = (id) => {
     //     const serviceName = prompt('Edit service name:', services.find((p) => p.id === id).name);
@@ -32,7 +32,7 @@ function Services() {
     // };
 
     if (loading) {
-        return <div>Cargando productos...</div>;
+        return <div>Cargando servicios...</div>;
     }
 
     if (error) {

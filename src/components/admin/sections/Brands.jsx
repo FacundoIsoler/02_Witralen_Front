@@ -3,15 +3,15 @@ import useBrandStore from '../../../stores/adminStores/brandStore';
 import styles from './Brands.module.css';
 
 function Brands() {
-    const { brands, brandList, loading, error } = useBrandStore();
+    const { brands, brandList, deleteBrand, loading, error } = useBrandStore();
 
     useEffect(() => {
         brandList(); 
     }, [brandList]);
 
-    // const handleDelete = (id) => {
-    //     setbrands(brands.filter((brand) => brand.id !== id));
-    // };
+    const handleDelete = (id) => {
+        deleteBrand(id);
+    };
 
     // const handleEdit = (id) => {
     //     const brandName = prompt('Edit brand name:', brands.find((p) => p.id === id).name);
@@ -32,7 +32,7 @@ function Brands() {
     // };
 
     if (loading) {
-        return <div>Cargando productos...</div>;
+        return <div>Cargando marcas...</div>;
     }
 
     if (error) {

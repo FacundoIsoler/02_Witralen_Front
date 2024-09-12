@@ -3,16 +3,16 @@ import useProductStore from '../../../stores/adminStores/productStore';
 import styles from './Products.module.css';
 
 function Products() {
-    const { products, productList, loading, error } = useProductStore();
+    const { products, productList, deleteProduct, loading, error } = useProductStore();
 
     useEffect(() => {
         productList(); 
     }, [productList]);
 
 
-    // const handleDelete = (id) => {
-    //     setProducts(products.filter((product) => product.id !== id));
-    // };
+    const handleDelete = (id) => {
+        deleteProduct(id);
+    };
 
     // const handleEdit = (id) => {
     //     const productName = prompt('Edit product name:', products.find((p) => p.id === id).name);
