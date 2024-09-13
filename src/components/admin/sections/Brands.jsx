@@ -6,7 +6,8 @@ function Brands() {
     const { brands, brandList, postBrand, deleteBrand, loading, error } = useBrandStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newBrand, setNewBrand] = useState("");
-    const [selectedImages, setSelectedImages] = useState([]); 
+    const [selectedImage, setSelectedImage] = useState(null); 
+    const [imageBase64, setImageBase64] = useState("");
 
 
     useEffect(() => {
@@ -29,16 +30,30 @@ function Brands() {
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        setSelectedImages([]);
+        setSelectedImage(null);
+        setImageBase64("");
+        setNewBrand("");
+    };
+
+    const convertToBase64 = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImageBase64(reader.result); // Guardar el string base64
+        };
+        reader.onerror = (error) => {
+            console.log("Error al convertir la imagen:", error);
+        };
     };
 
     const handleSaveBrand = async () => {
-        if (newBrand.trim() && selectedImages.length > 0) {
-            const logo = selectedImages[0]; 
-            await postBrand(newBrand, logo); 
+        if (newBrand.trim() && imageBase64) {
+            await postBrand(newBrand, imageBase64); // Pasamos el nombre y el logo en base64 al store
 
+            // Limpiar el formulario y cerrar el modal
             setNewBrand('');
-            setSelectedImages([]);
+            setSelectedImage(null);
+            setImageBase64('');
             setIsModalOpen(false);
         } else {
             alert("Por favor, ingrese un nombre de marca y seleccione un logo.");
@@ -46,16 +61,16 @@ function Brands() {
     };
 
     const handleImageChange = (event) => {
-        const files = Array.from(event.target.files);
-        setSelectedImages(files);
-
-        console.log('Imágenes seleccionadas:', files);
-        ;
+        const file = event.target.files[0]; // Seleccionar solo una imagen
+        if (file) {
+            setSelectedImage(file);
+            convertToBase64(file); // Convertir a base64
+        }
     };
 
-    const handleRemoveImage = (index) => {
-        const updatedImages = selectedImages.filter((_, i) => i !== index);
-        setSelectedImages(updatedImages);
+    const handleRemoveImage = () => {
+        setSelectedImage(null);
+        setImageBase64('');
     };
 
     if (loading) {
@@ -117,25 +132,25 @@ function Brands() {
                             <label htmlFor="file-upload" className={styles.uploadBtn}>Seleccione logo</label>
                         </div>
 
-                        {selectedImages.length > 0 && (
+                        {selectedImage && (
                             <div className={styles.preview}>
                                 <p>Vista previa:</p>
                                 <div className={styles.imagePreviewContainer}>
-                                    {selectedImages.map((image, index) => (
-                                        <div key={index} className={styles.previewItem}>
+                                   
+                                        <div className={styles.previewItem}>
                                             <img
-                                                src={URL.createObjectURL(image)}
-                                                alt={`Vista previa ${index}`}
+                                                src={URL.createObjectURL(selectedImage)}
+                                                alt={`Vista previa`}
                                                 style={{ width: '100px', height: '100px' }}
                                             />
                                             <button
-                                                onClick={() => handleRemoveImage(index)}
+                                                onClick={handleRemoveImage}
                                                 className={styles.removeImageBtn}
                                             >
                                                 ✖
                                             </button>
                                         </div>
-                                    ))}
+                                    
                                 </div>
                             </div>
                         )}

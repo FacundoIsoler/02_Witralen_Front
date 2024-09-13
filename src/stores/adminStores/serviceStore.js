@@ -35,6 +35,39 @@ const useServiceStore = create((set, get) => ({
         }
     },
 
+    postService: async (name, image, category, description, brandId) => {
+        set({ loading: true, error: null });
+        try {
+          const response = await axios.post(
+            "http://localhost:3000/service/newService",
+            { name, image, category, description, brandId }
+          );
+    
+          set((state) => ({
+            services: [...state.services, response.data],
+            error: null,
+          }));
+          console.log("Servicio posteado exitosamente");
+        } catch (error) {
+          if (error.response) {
+            console.error("Error al postear Servicio:", error.response.data);
+            set({
+              error: error.response.data.error || "Error al postear Servicio",
+            });
+          } else if (error.request) {
+            console.error(
+              "Error al postear Servicio: No se recibió respuesta del servidor"
+            );
+            set({ error: "No se recibió respuesta del servidor" });
+          } else {
+            console.error("Error al postear Servicio:", error.message);
+            set({ error: error.message });
+          }
+        } finally {
+          set({ loading: false });
+        }
+      },
+
     deleteService: async (id) => {
         set({ loading: true, error: null });
         try {
