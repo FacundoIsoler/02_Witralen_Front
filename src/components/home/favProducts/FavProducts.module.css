@@ -1,0 +1,77 @@
+.carouselContainer {
+    padding: 20px;
+    text-align: center;
+    max-width: 90vw;
+    margin: 0 auto;
+    margin-top: 15rem;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.productCard {
+    padding: 15px;
+    width: 100%;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.productCard:hover {
+    transform: scale(1.05);
+}
+
+.productImage {
+    width: 50%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.productName {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.productButton {
+    background-color: #ff6f00;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.productButton:hover {
+    background-color: #e05a00;
+}
+
+.custom-dot-list-style button {
+    border: none;
+    background: #ff6f00;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.react-multi-carousel-dot--active button {
+    background: #e05a00 !important;
+}

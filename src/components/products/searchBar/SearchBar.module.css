@@ -1,0 +1,20 @@
+.searchBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: white;
+    margin-bottom: 1rem;
+}
+
+.filter {
+    padding: 0.5rem;
+    border: 1px solid #FF6F00;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.5rem;
+    margin-left: 1rem;
+    border: 1px solid #FF6F00;
+}

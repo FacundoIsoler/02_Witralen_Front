@@ -16,7 +16,7 @@ const Navbar = () => {
             </div>
             <ul className={s.navLinks}>
                 <li className={s.navItem}><a href="#home">Home</a></li>
-                <li className={s.navItem}><a href="#productos">Productos</a></li>
+                <li className={s.navItem}><a href="products">Productos</a></li>
                 <li className={s.navItem}><a href="#servicios">Servicios</a></li>
                 <li className={s.navItem}><a href="#contacto">Contacto</a></li>
             </ul>
@@ -29,7 +29,7 @@ const Navbar = () => {
                 <div className={s.mobileMenu}>
                     <ul className={s.mobileNavLinks}>
                         <li className={s.navItem}><a href="#home">Home</a></li>
-                        <li className={s.navItem}><a href="#productos">Productos</a></li>
+                        <li className={s.navItem}><a href="products">Productos</a></li>
                         <li className={s.navItem}><a href="#servicios">Servicios</a></li>
                         <li className={s.navItem}><a href="#contacto">Contacto</a></li>
                     </ul>
