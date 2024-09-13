@@ -7,6 +7,7 @@ import Login from "./components/login/Login.jsx";
 import Dashboard from "./components/admin/Dashboard.jsx";
 // import DashboardUser from "./components/user/dashboard/DashboarUser.jsx";
 import './app.css';
+import Products from "./components/products/Products.jsx";
 
 
 function App() {
@@ -16,12 +17,11 @@ function App() {
         <Routes>
           {/* general */}
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/signUp/*" element={<SignUpStepsContainer />} /> */}
           <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
 
           {/* admin */}
           <Route path="/admin" element={<Dashboard />} />
-          {/* <Route path="/users" element={<Users />} /> */}
 
         </Routes>
       </div>

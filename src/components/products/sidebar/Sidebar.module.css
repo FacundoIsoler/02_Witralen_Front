@@ -1,0 +1,22 @@
+.sidebar {
+    background-color: #FF6F00;
+    padding: 1rem;
+    width: 250px;
+    height: 100vh;
+}
+
+h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.categoryList, .brandList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.categoryList li, .brandList li {
+    margin: 0.5rem 0;
+    color: white;
+    cursor: pointer;
+}

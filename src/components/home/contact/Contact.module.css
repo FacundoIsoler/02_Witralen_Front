@@ -1,0 +1,79 @@
+.container{
+    margin-top: 10rem;
+    display: grid;
+    place-items: center;
+}
+
+.contactContainer {
+    width: 80vw;
+    margin: 0 auto;
+    text-align: center;
+    /* background-image: url('../../../assets/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; */
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    color: #ff6f00;
+    margin-bottom: 20px;
+}
+
+.infoSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    width: 80%;
+    min-height: 30vh;
+}
+
+.information,
+.schedule {
+    width: 45%;
+}
+
+.information h3,
+.schedule h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.information p,
+.schedule p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.phone {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.phoneIcon {
+    margin-right: 8px;
+}
+
+.email {
+    color: #ff6f00;
+    text-decoration: none;
+}
+
+.email:hover {
+    text-decoration: underline;
+}
+
+.schedule p {
+    font-size: 16px;
+    font-weight: bold;
+}
