@@ -3,7 +3,7 @@ import useBrandStore from '../../../stores/adminStores/brandStore';
 import styles from './Brands.module.css';
 
 function Brands() {
-    const { brands, brandList, deleteBrand, loading, error } = useBrandStore();
+    const { brands, brandList, postBrand, deleteBrand, loading, error } = useBrandStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newBrand, setNewBrand] = useState("");
     const [selectedImages, setSelectedImages] = useState([]); 
@@ -32,20 +32,24 @@ function Brands() {
         setSelectedImages([]);
     };
 
-    const handleSaveBrand = () => {
-        if (newBrand.trim()) {
-            setBrands([...brands, { id: Date.now(), name: newBrand, images: selectedImages }]);
+    const handleSaveBrand = async () => {
+        if (newBrand.trim() && selectedImages.length > 0) {
+            const logo = selectedImages[0]; 
+            await postBrand(newBrand, logo); 
+
             setNewBrand('');
             setSelectedImages([]);
             setIsModalOpen(false);
+        } else {
+            alert("Por favor, ingrese un nombre de marca y seleccione un logo.");
         }
     };
 
     const handleImageChange = (event) => {
         const files = Array.from(event.target.files);
-        setSelectedImages((prevImages) => [...prevImages, ...files]);
+        setSelectedImages(files);
 
-        console.log('Imágenes seleccionadas:', selectedImages);
+        console.log('Imágenes seleccionadas:', files);
         ;
     };
 

@@ -31,7 +31,7 @@ function Products() {
 
     const handleSaveProduct = () => {
         if (newProduct.trim()) {
-            setProducts([...products, { id: Date.now(), name: newProduct, images: selectedImages }]);
+            products([...products, { id: Date.now(), name: newProduct, images: selectedImages }]);
             setNewProduct('');
             setSelectedImages([]);
             setIsModalOpen(false);
@@ -83,7 +83,7 @@ function Products() {
                             <button className={styles.editBtn}>
                                 ✏️
                             </button>
-                            <button className={styles.deleteBtn}>
+                            <button onClick={() => handleDelete(product.id)} className={styles.deleteBtn}>
                                 🗑️
                             </button>
                         </div>

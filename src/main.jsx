@@ -13,7 +13,7 @@ function Root() {
 
   return (
     <>
-      {!hideNavbar && <Navbar />}
+      {/* {!hideNavbar && <Navbar />} */}
       <App />
     </>
   );

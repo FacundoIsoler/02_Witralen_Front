@@ -6,7 +6,6 @@ const useBrandStore = create((set, get) => ({
   loading: false,
   error: null,
 
-
   brandList: async () => {
     set({ loading: true, error: null });
     try {
@@ -36,6 +35,46 @@ const useBrandStore = create((set, get) => ({
     }
   },
 
+  postBrand: async (name, logo) => {
+    set({ loading: true, error: null });
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('logo', logo);
+
+      const response = await axios.post(
+        "http://localhost:3000/brand/newBrand",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      set((state) => ({
+        brands: [...state.brands, response.data],
+        error: null,
+      }));
+      console.log("Marca posteada exitosamente");
+    } catch (error) {
+      if (error.response) {
+        console.error("Error al postear Marca:", error.response.data);
+        set({ error: error.response.data.error || "Error al postear Marca" });
+      } else if (error.request) {
+        console.error(
+          "Error al postear Marca: No se recibió respuesta del servidor"
+        );
+        set({ error: "No se recibió respuesta del servidor" });
+      } else {
+        console.error("Error al postear Marca:", error.message);
+        set({ error: error.message });
+      }
+    } finally {
+      set({ loading: false });
+    }
+  },
+
   deleteBrand: async (id) => {
     set({ loading: true, error: null });
     try {
@@ -51,7 +90,7 @@ const useBrandStore = create((set, get) => ({
     } catch (error) {
       if (error.response) {
         console.error("Error al eliminar esta Marca:", error.response.data);
-        set({ error: error.response.data.error || "Error en el login" });
+        set({ error: error.response.data.error || "Error al eliminar Marca" });
       } else if (error.request) {
         console.error(
           "Error al eliminar esta Marca: No se recibió respuesta del servidor"

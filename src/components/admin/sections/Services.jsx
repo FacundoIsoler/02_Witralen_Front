@@ -32,7 +32,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSaveService = () => {
         if (newService.trim()) {
-            setServices([...services, {
+            services([...services, {
                 id: Date.now(),
                 name: newService,
                 images: selectedImages,
@@ -87,7 +87,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                             <button className={styles.editBtn}>
                                 ✏️
                             </button>
-                            <button className={styles.deleteBtn}>
+                            <button onClick={() => handleDelete(service.id)} className={styles.deleteBtn}>
                                 🗑️
                             </button>
                         </div>
