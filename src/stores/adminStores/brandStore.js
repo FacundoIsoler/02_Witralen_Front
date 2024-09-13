@@ -38,18 +38,9 @@ const useBrandStore = create((set, get) => ({
   postBrand: async (name, logo) => {
     set({ loading: true, error: null });
     try {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('logo', logo);
-
       const response = await axios.post(
         "http://localhost:3000/brand/newBrand",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        { name, logo }
       );
 
       set((state) => ({
