@@ -4,7 +4,11 @@
     text-align: center;
     overflow-x: hidden;
     position: relative;
-    margin-top: 15rem;
+    margin-top: 5rem;
+    padding-top:50px;
+    padding-bottom: 50px;;
+    width: 100vw;
+    background-color: #F9F9F9;
 }
 
 .title {
@@ -30,7 +34,7 @@
 .services {
     display: flex;
     justify-content: space-around;
-    gap: 1.25rem;
+    gap: 5rem;
     position: relative;
 }
 
@@ -51,7 +55,6 @@
     flex-shrink: 0;
 }
 
-/* Transiciones para los servicios */
 .selectedService.move0 {
     transform: translateX(-3%);
 }
@@ -71,7 +74,6 @@
     object-fit: contain;
 }
 
-/* Aplazamos la aparición del texto */
 .textContainer {
     width: calc(80vw - 45vw);
     height: 100%;

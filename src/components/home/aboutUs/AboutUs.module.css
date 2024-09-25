@@ -1,0 +1,66 @@
+.aboutUsContainer {
+    padding: 40px 20px;
+    background-color: #fff;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.textSection {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.heading {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.line {
+    width: 50px;
+    height: 3px;
+    background-color: orange;
+    margin-bottom: 20px;
+}
+
+.visionMission {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.vision, .mission {
+    margin-bottom: 20px;
+}
+
+.vision h3, .mission h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.vision p, .mission p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.logoSection {
+    flex: 0.5;
+    text-align: center;
+}
+
+.logo {
+    max-width: 300px;
+    height: auto;
+}

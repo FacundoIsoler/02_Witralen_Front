@@ -1,0 +1,37 @@
+.footerContainer {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+}
+
+.footerContent {
+    font-size: 16px;
+    color: #FF6F00;
+    display: flex;
+    /* flex-direction: column; */
+    gap: 10px;
+}
+
+.email {
+    color: #ff6f00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.email:hover {
+    text-decoration: underline;
+}
+
+.footerContent p {
+    margin: 0;
+}
+
+.footerContent p, 
+.footerContent a {
+    font-size: 18px;
+}

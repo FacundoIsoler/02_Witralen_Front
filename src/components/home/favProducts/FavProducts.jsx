@@ -13,9 +13,9 @@ const products = [
     },
     {
         id: 2,
-        name: 'Producto 2',
+        name: 'servicio 2',
         image: '',
-        link: '/producto/2',
+        link: '/servicio/2',
     },
     {
         id: 3,
@@ -25,9 +25,9 @@ const products = [
     },
     {
         id: 4,
-        name: 'Producto 4',
+        name: 'servicio 4',
         image: '',
-        link: '/producto/4',
+        link: '/servicio/4',
     },
     {
         id: 5,
@@ -58,7 +58,7 @@ const responsive = {
 const FavProducts = () => {
     return (
         <div className={styles.carouselContainer}>
-            <h2 className={styles.title}>Productos Destacados</h2>
+            <h2 className={styles.title}>Novedades</h2>
             <Carousel
                 responsive={responsive}
                 autoPlay={true}

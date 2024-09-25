@@ -1,22 +1,44 @@
 .container{
-    margin-top: 10rem;
+    margin-top: 2rem;
     display: grid;
     place-items: center;
+    background-image: url('../../../assets/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .contactContainer {
-    width: 80vw;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
     margin: 0 auto;
     text-align: center;
-    /* background-image: url('../../../assets/background.jpg');
-    background-size: cover;
-    background-repeat: no-repeat; */
     min-height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
+
+/* Pseudo-elemento para aplicar la capa con opacidad */
+.contactContainer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+.title,
+.infoSection {
+    position: relative;
+    z-index: 2;
+}
+
 
 .title {
     font-size: 50px;
@@ -31,7 +53,7 @@
     align-items: flex-start;
     padding: 20px;
     margin-top: 20px;
-    background-color: #fff;
+    /* background-color: #fff; */
     border-radius: 8px;
     width: 80%;
     min-height: 30vh;

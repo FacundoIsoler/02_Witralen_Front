@@ -1,49 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './Map.module.css';
 
 function Map() {
-    // Initialize and add the map
-    useEffect(() => {
-        async function initMap() {
-            // The location of Uluru
-            const position = { lat: -33.061885, lng: -68.87290 };
-
-            // Request needed libraries.
-            //@ts-ignore
-            const { Map } = await google.maps.importLibrary('maps');
-            const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-
-            // The map, centered at Uluru
-            const map = new Map(document.getElementById('map'), {
-                zoom: 10,
-                center: position,
-                mapId: 'DEMO_MAP_ID',
-            });
-
-            // The marker, positioned at Uluru
-            const marker = new AdvancedMarkerElement({
-                map: map,
-                position: position,
-                title: 'Uluru',
-            });
-        }
-
-        // Load the Google Maps API script dynamically
-        const loadGoogleMaps = () => {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAsJ8QLMN7GeP2WJa4zWHaAOMPoAeyie3o&callback=initMap`;
-            script.async = true;
-            script.defer = true;
-            window.initMap = initMap; // Set the callback function
-            document.head.appendChild(script);
-        };
-
-        loadGoogleMaps();
-    }, []);
-
     return (
         <div className={styles.container}>
-            <div id="map" className={styles.mapContainer}></div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3343.794016587764!2d-68.87546642347601!3d-33.06188937771985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x967e75a64d8abf9f%3A0xe1dc31a98728f2b6!2sWitralen%20S.A!5e0!3m2!1ses!2sar!4v1726253179823!5m2!1ses!2sar" width="800" height="600" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     );
 }
