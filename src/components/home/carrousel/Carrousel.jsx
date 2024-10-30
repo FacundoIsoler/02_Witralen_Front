@@ -2,55 +2,32 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import styles from "./Carrousel.module.css";
-import vigia from '../../../assets/marcas/vigia.jpeg';
 
-const products = [
-    {
-        id: 1,
-        name: 'Aire Acondicionado',
-        image: vigia,
-        link: '/producto/aire-acondicionado',
-    },
-    {
-        id: 2,
-        name: 'Servicio 2',
-        image: vigia,
-        link: '/servicio/2',
-    },
-    {
-        id: 3,
-        name: 'Producto 3',
-        image: vigia,
-        link: '/producto/3',
-    },
-    {
-        id: 4,
-        name: 'Servicio 4',
-        image: vigia,
-        link: '/servicio/4',
-    },
-    {
-        id: 5,
-        name: 'Producto 5',
-        image: vigia,
-        link: '/producto/5',
-    }
+const items = [
+    { id: 1, text: 'GET HYPE' },
+    { id: 2, icon: true },
+    { id: 3, text: 'LEVEL UP' },
+    { id: 4, icon: true },
+    { id: 5, text: 'GET HYPE' },
+    { id: 6, icon: true },
+    { id: 7, text: 'LEVEL UP' },
+    { id: 8, icon: true }
 ];
 
 const responsive = {
     desktop: {
         breakpoint: { max: 3000, min: 1024 },
-        items: 3,
+        items: 7, // Mostrar 7 elementos en escritorio
         slidesToSlide: 1
     },
     tablet: {
         breakpoint: { max: 1024, min: 768 },
-        items: 2,
+        items: 5, // Mostrar 5 elementos en tabletas
         slidesToSlide: 1
     },
     mobile: {
         breakpoint: { max: 767, min: 464 },
-        items: 1,
+        items: 3, // Mostrar 3 elementos en móviles
         slidesToSlide: 1
     }
 };
@@ -58,27 +35,34 @@ const responsive = {
 function Carrousel() {
     return (
         <div className={styles.carouselContainer}>
-            <h2 className={styles.title}>Marcas</h2>
+            <h2></h2>
             <Carousel
                 responsive={responsive}
                 autoPlay={true}
-                swipeable={false}
-                draggable={false}
-                showDots={false} 
+                swipeable={true}
+                draggable={true}
+                showDots={false}
                 infinite={true}
                 partialVisible={false}
                 arrows={false}
-                autoPlaySpeed={1000}
+                autoPlaySpeed={1500}
             >
-                {products.map((product) => (
-                    <div className={styles.productContainer} key={product.id}>
-                        <a href={product.link} className={styles.productLink}>
-                            <img
-                                src={product.image ? product.image : 'https://via.placeholder.com/300x300'}
-                                alt={product.name}
-                                className={styles.productImage}
-                            />
-                        </a>
+                {items.map((item) => (
+                    <div className={styles.carouselItem} key={item.id}>
+                        {item.text ? (
+                            <p className={styles.carouselText}>{item.text}</p>
+                        ) : (
+                            <svg
+                                className={styles.carouselIcon}
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                width="24"
+                                height="24"
+                                fill="white"
+                            >
+                                <path d="M12 0l3 7h7l-5.5 4.5 2 7-6-4-6 4 2-7L2 7h7z" />
+                            </svg>
+                        )}
                     </div>
                 ))}
             </Carousel>

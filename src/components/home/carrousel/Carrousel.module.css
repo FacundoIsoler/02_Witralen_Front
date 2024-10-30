@@ -1,38 +1,38 @@
+/* Estilos del carrusel */
 .carouselContainer {
     max-width: 100%;
-    margin: 0 auto;
-}
-
-.title {
+    background-color: #ff6f00; 
+    padding: 10px 0;
+    overflow: hidden;
     text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
 }
 
-.productContainer {
+h2 {
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+
+.carouselItem {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
+    padding: 10px;
 }
 
-.productLink {
-    text-decoration: none;
-    color: inherit;
+.carouselText {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    margin: 0 20px;
 }
 
-.productImage {
-    width: 100%;
-    height: auto;
-    max-width: 100px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
-
-.productImage:hover {
-    transform: scale(1.05);
+.carouselIcon {
+    width: 24px;
+    height: 24px;
+    margin: 0 20px;
+    fill: white;
 }

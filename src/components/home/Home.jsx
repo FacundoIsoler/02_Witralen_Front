@@ -17,6 +17,7 @@ function Home() {
             <Carrousel />
             <AboutUs />
             <FavProducts />
+            <Carrousel />
             <Services />
             <Contact />
             <Map />
