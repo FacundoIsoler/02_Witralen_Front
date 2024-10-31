@@ -3,7 +3,6 @@
     justify-content: center;
     align-items: center;
     background: transparent;
-    position: fixed;
     position: absolute;
     top: 0;
     left: 0;
@@ -39,7 +38,6 @@
     text-decoration: none;
     color: black;
     font-weight: bold;
-    padding: 5px 0;
     display: inline-block;
 }
 

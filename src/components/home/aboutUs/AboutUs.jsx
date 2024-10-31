@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './AboutUs.module.css';
-// import logo from '../../../assets/logo/logo.png';
 
 function AboutUs() {
     return (
@@ -24,9 +23,6 @@ function AboutUs() {
                         </div>
                     </div>
                 </div>
-                {/* <div className={styles.logoSection}>
-                    <img src={logo} alt="Logo WitraleN" className={styles.logo} />
-                </div> */}
             </div>
         </div>
     );
