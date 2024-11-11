@@ -10,7 +10,7 @@ function Root() {
   const locationPathname = window.location.pathname;
 
   // Verifica si la ruta es exactamente /login o /register
-  const hideNavbar = locationPathname === '/login' || locationPathname === '/register';
+  const hideNavbar = locationPathname === '/login' || locationPathname === '/register' || locationPathname === '/';
 
   return (
     <>

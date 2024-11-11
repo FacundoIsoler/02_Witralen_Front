@@ -1,16 +1,13 @@
 .container{
     display: grid;
     place-items: center;
-    background-image: url('../../../assets/background.png');
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-color: #F3F3F3;
 }
 
 .contactContainer {
     position: relative;
     width: 100vw;
-    height: 100vh;
-    ;
+    /* height: 100vh; */
     text-align: center;
     min-height: 50vh;
     display: flex;
@@ -28,22 +25,28 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.5);
     z-index: 1;
 }
 
-.title,
-.infoSection {
-    position: relative;
-    z-index: 2;
+/* Título */
+.title {
+    display: grid;
+    place-items: start;
+    padding: 50px 0;
+    background-color: #2D2F35;
+    width: 100%;
 }
 
+.tittleWidth{
+    width: 70%;
+    background-color: #E05A00;
+}
 
-.title {
-    font-size: 50px;
+.title h2 {
+    font-size: 64px;
     font-weight: bold;
-    color: #ff6f00;
-    margin-bottom: 20px;
+    color: white;
+    margin: 0;
 }
 
 .infoSection {
@@ -52,7 +55,6 @@
     align-items: flex-start;
     padding: 20px;
     margin-top: 20px;
-    /* background-color: #fff; */
     border-radius: 8px;
     width: 80%;
     min-height: 30vh;

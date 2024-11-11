@@ -30,7 +30,6 @@ function CarrouselMarca() {
 
     return (
         <section>
-            {/* <h1 className={s.tittle}>Our partners</h1> */}
             <div
                 className={s.slider}
                 style={{

@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import styles from './Contact.module.css';
 
 function Contact() {
+
+    useEffect(() => {
+        AOS.init({ duration: 1000 });
+    }, []);
+
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>Contacto</h2>
+            <div className={styles.title} data-aos="fade-left" data-aos-delay="500">
+                <div className={styles.tittleWidth}>
+                    <h2 >Contacto</h2>
+                </div>
+            </div>
             <div className={styles.contactContainer}>
                 <div className={styles.infoSection}>
                     <div className={styles.information}>

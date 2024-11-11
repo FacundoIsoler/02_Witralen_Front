@@ -35,7 +35,6 @@ const responsive = {
 function Carrousel() {
     return (
         <div className={styles.carouselContainer}>
-            <h2></h2>
             <Carousel
                 responsive={responsive}
                 autoPlay={true}

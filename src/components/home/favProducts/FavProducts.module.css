@@ -1,11 +1,57 @@
+/* Contenedor principal */
+.container {
+    padding: 40px 0;
+    text-align: center;
+    display: block; /* Cambiado a block para evitar problemas de visibilidad */
+    width: 100vw;
+    background-image: url('../../../assets/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+/* Contenedor del carrusel */
 .carouselContainer {
     padding: 20px 0;
     text-align: center;
     max-width: 90vw;
-    ;
-    margin-top: 5rem;
+    margin: 5rem auto 0; /* Centra el carrusel en la pantalla */
+    gap: 20px; /* Espacio entre tarjetas */
+    position: relative;
 }
 
+/* Flechas de navegación */
+.carouselArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.carouselArrowLeft {
+    left: 0px; /* Mueve la flecha izquierda fuera del contenedor */
+}
+
+.carouselArrowRight {
+    right: 0px; /* Mueve la flecha derecha fuera del contenedor */
+}
+
+.carouselArrow:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Título del carrusel */
 .title {
     font-size: 26px;
     font-weight: bold;
@@ -13,9 +59,11 @@
     color: #333;
 }
 
+/* Tarjeta de producto */
 .productCard {
     padding: 15px;
     width: 100%;
+    max-width: 300px;
     height: auto;
     background-color: #ffffff;
     border-radius: 10px;
@@ -26,6 +74,7 @@
     justify-content: space-between;
     align-items: center;
     transition: transform 0.3s ease;
+    margin: 0 auto;
 }
 
 .productCard:hover {
@@ -62,16 +111,81 @@
     background-color: #e05a00;
 }
 
+/* Estilos para los dots de navegación personalizados */
 .custom-dot-list-style button {
-    border: none;
+    border: 2px solid #ff6f00;
     background: #ff6f00;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     margin: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.custom-dot-list-style button:hover {
+    background-color: #e05a00;
+    transform: scale(1.2);
 }
 
 .react-multi-carousel-dot--active button {
     background: #e05a00 !important;
+    border-color: #e05a00 !important;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .productCard {
+        width: 80%;
+        padding: 15px;
+    }
+
+    .productImage {
+        width: 70%;
+        height: 150px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .productButton {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    .carouselArrow {
+        width: 35px;
+        height: 35px;
+        left: -30px;
+        right: -30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .productCard {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .productImage {
+        width: 60%;
+        height: 120px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .productButton {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .carouselArrow {
+        width: 30px;
+        height: 30px;
+        left: -20px;
+        right: -20px;
+    }
 }

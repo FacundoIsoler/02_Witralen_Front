@@ -16,7 +16,6 @@ function Home() {
         <div className={styles.homeContainer}>
             <Presentation />
             <CarrouselMarca />
-            <Carrousel />
             <AboutUs />
             <FavProducts />
             <Carrousel />

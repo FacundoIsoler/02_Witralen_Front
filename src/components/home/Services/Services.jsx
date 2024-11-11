@@ -1,74 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import styles from './Services.module.css';
 import instalacionProfesional from '../../../assets/instalacionProfesional.png';
 import asesoramiento from '../../../assets/asesoramiento.png';
 import venta from '../../../assets/venta.png';
 
 const Services = () => {
-    const [selectedService, setSelectedService] = useState(null);
-
-    const handleClick = (service) => {
-        if (selectedService === service) {
-            setSelectedService(null);
-        } else {
-            setSelectedService(service); 
-        }
-    };
+    useEffect(() => {
+        AOS.init({ duration: 1000 });
+    }, []);
 
     return (
         <div className={styles.container}>
-            <div className={styles.title}>
-                <h2>Nuestros Servicios</h2>
-                <div className={styles.underline}></div>
+            <div className={styles.title} data-aos="fade-right" data-aos-delay="500">
+                <div className={styles.tittleWidth}>
+                    <h2>Nuestros Servicios</h2>
+                </div>
             </div>
             <div className={styles.services}>
                 {/* Servicio 1 */}
-                <div
-                    className={`${styles.serviceItem} ${selectedService === 'instalacion' ? `${styles.selectedService} ${styles.move0}` : ''} ${selectedService && selectedService !== 'instalacion' ? styles.hidden : ''}`}
-                    onClick={() => handleClick('instalacion')}
-                >
-                    <div className={styles.imgH3}>
-                        <img src={instalacionProfesional} alt="Instalación Profesional" className={styles.image} />
+                <div className={`${styles.serviceItem} ${styles.alternateLeft}`}  data-aos="fade-left" data-aos-delay="500">
+                    <img src={instalacionProfesional} alt="Instalación Profesional" className={styles.image} />
+                    <div className={styles.textContainer}>
                         <h3>Instalación Profesional</h3>
+                        <p>Un servicio de alta calidad y confianza, enfocado en brindar soluciones técnicas con la máxima eficiencia y precisión. Este término sugiere un enfoque meticuloso y experto, donde cada detalle cuenta para garantizar que el cliente reciba un resultado impecable.</p>
                     </div>
-                    {selectedService === 'instalacion' && (
-                        <div className={styles.textContainer}>
-                            <p>Este es el servicio de instalación profesional que ofrecemos...</p>
-                        </div>
-                    )}
                 </div>
 
                 {/* Servicio 2 */}
-                <div
-                    className={`${styles.serviceItem} ${selectedService === 'asesoramiento' ? `${styles.selectedService} ${styles.move50}` : ''} ${selectedService && selectedService !== 'asesoramiento' ? styles.hidden : ''}`}
-                    onClick={() => handleClick('asesoramiento')}
-                >
-                    <div className={styles.imgH3}>
-                        <img src={asesoramiento} alt="Consultoría y Asesoramiento" className={styles.image} />
+                <div className={`${styles.serviceItem} ${styles.alternateRight}`}  data-aos="fade-right" data-aos-delay="800">
+                    <div className={styles.textContainer}>
                         <h3>Consultoría y Asesoramiento</h3>
+                        <p>Ofrecemos un servicio completo de asesoramiento técnico...</p>
                     </div>
-
-                    {selectedService === 'asesoramiento' && (
-                        <div className={styles.textContainer}>
-                            <p>Ofrecemos un servicio completo de asesoramiento técnico...</p>
-                        </div>
-                    )}
+                    <img src={asesoramiento} alt="Consultoría y Asesoramiento" className={styles.image} />
                 </div>
 
                 {/* Servicio 3 */}
-                <div
-                    className={`${styles.serviceItem} ${selectedService === 'venta' ? `${styles.selectedService} ${styles.move100}` : ''} ${selectedService && selectedService !== 'venta' ? styles.hidden : ''}`}
-                    onClick={() => handleClick('venta')}
-                >
-                    <div className={styles.imgH3}>
-                        <img src={venta} alt="Venta y Post-Venta" className={styles.image} />
+                <div className={`${styles.serviceItem} ${styles.alternateLeft}`}  data-aos="fade-left" data-aos-delay="500">
+                    <img src={venta} alt="Venta y Post-Venta" className={styles.image} />
+                    <div className={styles.textContainer}>
                         <h3>Venta y Post-Venta</h3>
+                        <p>Te ofrecemos el mejor servicio de venta y post-venta...</p>
                     </div>
-                    {selectedService === 'venta' && (
-                        <div className={styles.textContainer}>
-                            <p>Te ofrecemos el mejor servicio de venta y post-venta...</p>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>
