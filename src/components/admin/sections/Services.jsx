@@ -1,16 +1,37 @@
 import React, { useState, useEffect } from "react";
 import useServiceStore from "../../../stores/adminStores/serviceStore";
+import useBrandStore from "../../../stores/adminStores/brandStore";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { auto } from "@cloudinary/url-gen/actions/resize";
+import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
+import { AdvancedImage } from "@cloudinary/react";
 import styles from "./Services.module.css";
 
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: "alphacode",
+  },
+});
+
 function Services() {
-  const { services, serviceList, postService, deleteService, loading, error } =
-    useServiceStore();
+  const {
+    services,
+    serviceList,
+    postService,
+    updateService,
+    deleteService,
+    loading,
+    error,
+  } = useServiceStore();
+  const { brands, brandList } = useBrandStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newService, setNewService] = useState("");
-  const [selectedImages, setSelectedImages] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const [name, setName] = useState("");
+  const [uploadedImages, setUploadedImages] = useState([]);
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [imageBase64Array, setImageBase64Array] = useState([]);
+  const [brandId, setBrandId] = useState("");
 
   useEffect(() => {
     serviceList();
@@ -18,68 +39,115 @@ function Services() {
 
   const handleAddService = () => {
     setIsModalOpen(true);
+    setIsEditing(false);
+    brandList();
+    resetForm();
+  };
+
+  const handleEdit = (id) => {
+    const service = services.find((s) => s.id === id);
+    if (service) {
+      setName(service.name);
+      setUploadedImages(service.images || []); // Asumimos que `images` contiene URLs
+      setCategory(service.category);
+      setBrandId(service.brandId);
+      setDescription(service.description);
+      setSelectedServiceId(id);
+      setIsEditing(true);
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setUploadedImages([]);
+    setName("");
+    setCategory("");
+    setDescription("");
+  };
+
+  const resetForm = () => {
+    setUploadedImages([]);
+    setName("");
+    setCategory("");
+    setDescription("");
   };
 
   const handleDelete = (id) => {
     deleteService(id);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedImages([]);
-    setImageBase64Array([]);
-    setNewService("");
-    setCategory("");
-    setDescription("");
-  };
-
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        resolve(reader.result);
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
   const handleSaveService = async () => {
     if (
-        newService.trim() &&
-        imageBase64Array.length > 0 &&
+      (name.trim() &&
+        (uploadedImages?.length || 0) > 0 &&
         category &&
-        description
-      ) {
-        // Llamar a la función postProduct del store
-        await postService(newService, imageBase64Array, category, description);
-  
-        // Limpiar el formulario y cerrar el modal
-        handleCloseModal();
+        description,
+      brandId)
+    ) {
+      const imageUrls = uploadedImages.map(
+        (publicId) =>
+          `https://res.cloudinary.com/alphacode/image/upload/${publicId}`
+      );
+
+      if (isEditing && selectedServiceId) {
+        await updateService(
+          selectedServiceId,
+          name,
+          imageUrls,
+          category,
+          description,
+          brandId
+        );
       } else {
-        alert("Por favor, complete todos los campos.");
+        await postService(name, imageUrls, category, description, brandId);
       }
+
+      handleCloseModal();
+    } else {
+      alert("Por favor, complete todos los campos.");
+    }
   };
 
-  const handleImageChange = async (event) => {
+  const handleImageUpload = async (event) => {
     const files = Array.from(event.target.files);
-    setSelectedImages(files);
+    const uploadPromises = files
+      .slice(0, 5 - (uploadedImages?.length || 0))
+      .map(async (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "Witralen");
 
-    const base64Images = await Promise.all(
-      files.map((file) => convertToBase64(file))
-    );
-    setImageBase64Array(base64Images); // Guardar las imágenes como base64 en un array
+        try {
+          const response = await fetch(
+            `https://api.cloudinary.com/v1_1/alphacode/image/upload`,
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          const data = await response.json();
+          return data.public_id; // Guardar solo el `public_id` de la imagen
+        } catch (error) {
+          console.error("Error al cargar la imagen:", error);
+          return null;
+        }
+      });
 
-    console.log("Imágenes seleccionadas (base64):", base64Images);
+    const newImageIds = await Promise.all(uploadPromises);
+    setUploadedImages((prev) => [
+      ...prev,
+      ...newImageIds.filter((id) => id !== null),
+    ]);
   };
 
-  const handleRemoveImage = (index) => {
-    const updatedImages = selectedImages.filter((_, i) => i !== index);
-    const updatedBase64 = imageBase64Array.filter((_, i) => i !== index);
-    setSelectedImages(updatedImages);
-    setImageBase64Array(updatedBase64);
+  // Generar una imagen transformada para mostrar en el frontend
+  const getTransformedImage = (imageId) => {
+    return cld
+      .image(imageId)
+      .format("auto") // Optimiza formato
+      .quality("auto") // Optimiza calidad
+      .resize(auto().gravity(autoGravity()).width(500).height(500)); // Redimensiona y auto-corta
   };
 
   if (loading) {
@@ -105,21 +173,26 @@ function Services() {
           <div key={service.id} className={styles.serviceItem}>
             <span>{service.name}</span>
             {service.images &&
-              service.images.map((image, index) => (
+              service.images.map((imageUrl, index) => (
                 <img
                   key={index}
-                  src={URL.createObjectURL(image)}
+                  src={imageUrl}
                   alt={service.name}
                   style={{ width: "50px", height: "50px", marginRight: "5px" }}
                 />
               ))}
             <div className={styles.actions}>
-              <button className={styles.editBtn}>✏️</button>
+              <button
+                onClick={() => handleEdit(service.id)}
+                className={styles.editBtn}
+              >
+                ✏
+              </button>
               <button
                 onClick={() => handleDelete(service.id)}
                 className={styles.deleteBtn}
               >
-                🗑️
+                🗑
               </button>
             </div>
           </div>
@@ -133,22 +206,22 @@ function Services() {
             <button onClick={handleCloseModal} className={styles.closeBtn}>
               ✖
             </button>
-            <h2>Ingresar Servicio</h2>
+            <h2>{isEditing ? "Editar Servicio" : "Ingresar Servicio"}</h2>
             <label>Nombre del Servicio</label>
             <input
               type="text"
-              value={newService}
-              onChange={(e) => setNewService(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className={styles.input}
             />
 
-            <label>Ingresar Imágenes</label>
+            <label>Ingresar Imágenes (máximo 5)</label>
             <div className={styles.uploadWrapper}>
               <input
                 type="file"
                 accept="image/*"
                 multiple
-                onChange={handleImageChange}
+                onChange={handleImageUpload}
                 className={styles.uploadInput}
                 id="file-upload"
               />
@@ -157,19 +230,23 @@ function Services() {
               </label>
             </div>
 
-            {selectedImages.length > 0 && (
+            {uploadedImages.length > 0 && (
               <div className={styles.preview}>
                 <p>Vista previa:</p>
                 <div className={styles.imagePreviewContainer}>
-                  {selectedImages.map((image, index) => (
+                  {uploadedImages.map((imageId, index) => (
                     <div key={index} className={styles.previewItem}>
-                      <img
-                        src={URL.createObjectURL(image)}
+                      <AdvancedImage
+                        cldImg={getTransformedImage(imageId)}
                         alt={`Vista previa ${index}`}
                         style={{ width: "100px", height: "100px" }}
                       />
                       <button
-                        onClick={() => handleRemoveImage(index)}
+                        onClick={() =>
+                          setUploadedImages((prev) =>
+                            prev.filter((_, i) => i !== index)
+                          )
+                        }
                         className={styles.removeImageBtn}
                       >
                         ✖
@@ -182,24 +259,38 @@ function Services() {
 
             <label>Ingresar Categoría</label>
             <select
+              className={styles.select}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className={styles.select}
             >
               <option value="">Seleccione...</option>
               <option value="categoria1">Categoría 1</option>
               <option value="categoria2">Categoría 2</option>
             </select>
 
+            <label>Marca relacionada</label>
+            <select
+              className={styles.select}
+              value={brandId}
+              onChange={(e) => setBrandId(e.target.value)}
+            >
+              <option value="">Seleccione...</option>
+              {brands.map((brand) => (
+                <option key={brand.id} value={brand.id}>
+                  {brand.name}
+                </option>
+              ))}
+            </select>
+
             <label>Descripción del Servicio</label>
             <textarea
+              className={styles.textarea}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className={styles.textarea}
             ></textarea>
 
             <button onClick={handleSaveService} className={styles.saveBtn}>
-              Aceptar
+              {isEditing ? "Actualizar" : "Aceptar"}
             </button>
           </div>
         </div>

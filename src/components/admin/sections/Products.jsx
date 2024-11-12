@@ -9,14 +9,24 @@ import styles from "./Products.module.css";
 
 const cld = new Cloudinary({
   cloud: {
-    cloudName: "alphacode"
-  }
+    cloudName: "alphacode",
+  },
 });
 
 function Products() {
-  const { products, productList, postProduct, deleteProduct, loading, error } = useProductStore();
+  const {
+    products,
+    productList,
+    postProduct,
+    updateProduct,
+    deleteProduct,
+    loading,
+    error,
+  } = useProductStore();
   const { brands, brandList } = useBrandStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
   const [name, setName] = useState("");
   const [uploadedImages, setUploadedImages] = useState([]); // Public IDs de imágenes cargadas
   const [category, setCategory] = useState("");
@@ -29,12 +39,35 @@ function Products() {
 
   const handleAddProduct = () => {
     setIsModalOpen(true);
+    setIsEditing(false);
     brandList();
+    resetForm();
+  };
+
+  const handleEdit = (id) => {
+    const product = products.find((p) => p.id === id);
+    if (product) {
+      setName(product.name);
+      setUploadedImages(product.images || []);
+      setCategory(product.category);
+      setBrandId(product.brandId);
+      setDescription(product.description);
+      setSelectedProductId(id);
+      setIsEditing(true);
+      setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setUploadedImages([]);
+    setName("");
+    setCategory("");
+    setDescription("");
+  };
+
+  const resetForm = () => {
+    setUploadedImages([]); 
     setName("");
     setCategory("");
     setDescription("");
@@ -47,28 +80,30 @@ function Products() {
   const handleSaveProduct = async () => {
     if (
       name.trim() &&
-      uploadedImages.length > 0 &&
+      (uploadedImages?.length || 0) > 0 && 
       category &&
       description &&
       brandId
     ) {
       // Construcción de URLs de Cloudinary a partir de los public_id de `uploadedImages`
-      const imageUrls = uploadedImages.map(publicId => 
-        `https://res.cloudinary.com/alphacode/image/upload/${publicId}`
+      const imageUrls = uploadedImages.map(
+        (publicId) =>
+          `https://res.cloudinary.com/alphacode/image/upload/${publicId}`
       );
 
-      let product = {
-        name,
-        images: imageUrls,  // Ahora se envían URLs de imágenes en lugar de public_id
-        category,
-        description,
-        brandId,
-      };
-      console.log("Producto que se envía:", product); // Verifica que contiene URLs
-  
-      // Envía las URLs de Cloudinary en lugar de las imágenes en base64 o public_id
-      await postProduct(name, imageUrls, category, description, brandId);
-      
+      if (isEditing && selectedProductId) {
+        await updateProduct(
+          selectedProductId,
+          name,
+          imageUrls,
+          category,
+          description,
+          brandId
+        );
+      } else {
+        await postProduct(name, imageUrls, category, description, brandId);
+      }
+
       handleCloseModal();
     } else {
       alert("Por favor, complete todos los campos.");
@@ -77,26 +112,28 @@ function Products() {
 
   const handleImageUpload = async (event) => {
     const files = Array.from(event.target.files);
-    const uploadPromises = files.slice(0, 5 - uploadedImages.length).map(async (file) => {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "Witralen");
+    const uploadPromises = files
+      .slice(0, 5 - (uploadedImages?.length || 0))
+      .map(async (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "Witralen");
 
-      try {
-        const response = await fetch(
-          `https://api.cloudinary.com/v1_1/alphacode/image/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-        const data = await response.json();
-        return data.public_id; // Guardar solo el `public_id` de la imagen
-      } catch (error) {
-        console.error("Error al cargar la imagen:", error);
-        return null;
-      }
-    });
+        try {
+          const response = await fetch(
+            `https://api.cloudinary.com/v1_1/alphacode/image/upload`,
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          const data = await response.json();
+          return data.public_id; // Guardar solo el `public_id` de la imagen
+        } catch (error) {
+          console.error("Error al cargar la imagen:", error);
+          return null;
+        }
+      });
 
     const newImageIds = await Promise.all(uploadPromises);
     setUploadedImages((prev) => [
@@ -146,7 +183,12 @@ function Products() {
                 />
               ))}
             <div className={styles.actions}>
-              <button className={styles.editBtn}>✏</button>
+              <button
+                onClick={() => handleEdit(product.id)}
+                className={styles.editBtn}
+              >
+                ✏
+              </button>
               <button
                 onClick={() => handleDelete(product.id)}
                 className={styles.deleteBtn}
@@ -165,7 +207,7 @@ function Products() {
             <button onClick={handleCloseModal} className={styles.closeBtn}>
               ✖
             </button>
-            <h2>Ingresar Producto</h2>
+            <h2>{isEditing ? "Editar Producto" : "Ingresar Producto"}</h2>
             <label>Nombre del Producto</label>
             <input
               type="text"
@@ -201,9 +243,11 @@ function Products() {
                         style={{ width: "100px", height: "100px" }}
                       />
                       <button
-                        onClick={() => setUploadedImages((prev) =>
-                          prev.filter((_, i) => i !== index)
-                        )}
+                        onClick={() =>
+                          setUploadedImages((prev) =>
+                            prev.filter((_, i) => i !== index)
+                          )
+                        }
                         className={styles.removeImageBtn}
                       >
                         ✖
@@ -233,7 +277,9 @@ function Products() {
             >
               <option value="">Seleccione...</option>
               {brands.map((brand) => (
-                <option key={brand.id} value={brand.id}>{brand.name}</option>
+                <option key={brand.id} value={brand.id}>
+                  {brand.name}
+                </option>
               ))}
             </select>
 
@@ -245,7 +291,7 @@ function Products() {
             ></textarea>
 
             <button onClick={handleSaveProduct} className={styles.saveBtn}>
-              Aceptar
+              {isEditing ? "Actualizar" : "Aceptar"}
             </button>
           </div>
         </div>

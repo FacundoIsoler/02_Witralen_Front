@@ -95,6 +95,39 @@ const useBrandStore = create((set, get) => ({
       set({ loading: false });
     }
   },
+
+  updateBrand: async (id, name, logo) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.patch(
+        `http://localhost:3000/brand/updateBrand/${id}`,
+        { name, logo }
+      );
+
+      set((state) => ({
+        brands: state.brands.map((brand) =>
+          brand.id === id ? response.data : brand
+        ),
+        error: null,
+      }));
+      console.log("Marca modificada exitosamente");
+    } catch (error) {
+      if (error.response) {
+        console.error("Error al modificar Marca:", error.response.data);
+        set({ error: error.response.data.error || "Error al modificar Marca" });
+      } else if (error.request) {
+        console.error(
+          "Error al modificar Marca: No se recibió respuesta del servidor"
+        );
+        set({ error: "No se recibió respuesta del servidor" });
+      } else {
+        console.error("Error al modificar Marca:", error.message);
+        set({ error: error.message });
+      }
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));
 
 export default useBrandStore;

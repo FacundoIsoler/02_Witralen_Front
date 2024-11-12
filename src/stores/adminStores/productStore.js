@@ -65,8 +65,40 @@ const useProductStore = create((set, get) => ({
       set({ loading: false });
     }
   },
-  
 
+  updateProduct: async (id, name, images, category, description, brandId) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.patch(
+        `http://localhost:3000/product/updateProduct/${id}`,
+        { name, images, category, description, brandId }
+      );
+
+      set((state) => ({
+        products: state.products.map((product) =>
+          product.id === id ? response.data : product
+        ),
+        error: null,
+      }));
+      console.log("Producto modificado exitosamente");
+    } catch (error) {
+      if (error.response) {
+        console.error("Error al modificar Producto:", error.response.data);
+        set({ error: error.response.data.error || "Error al modificar Producto" });
+      } else if (error.request) {
+        console.error(
+          "Error al modificar Producto: No se recibió respuesta del servidor"
+        );
+        set({ error: "No se recibió respuesta del servidor" });
+      } else {
+        console.error("Error al modificar Producto:", error.message);
+        set({ error: error.message });
+      }
+    } finally {
+      set({ loading: false });
+    }
+  },
+  
   deleteProduct: async (id) => {
     set({ loading: true, error: null });
     try {
