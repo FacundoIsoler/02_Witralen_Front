@@ -9,7 +9,7 @@ import styles from "./Products.module.css";
 
 const cld = new Cloudinary({
   cloud: {
-    cloudName: "AlphaCode"
+    cloudName: "alphacode"
   }
 });
 
@@ -17,8 +17,8 @@ function Products() {
   const { products, productList, postProduct, deleteProduct, loading, error } = useProductStore();
   const { brands, brandList } = useBrandStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newProduct, setNewProduct] = useState("");
-  const [uploadedImages, setUploadedImages] = useState([]); // URLs de imágenes cargadas
+  const [name, setName] = useState("");
+  const [uploadedImages, setUploadedImages] = useState([]); // Public IDs de imágenes cargadas
   const [category, setCategory] = useState("");
   const [brandId, setBrandId] = useState("");
   const [description, setDescription] = useState("");
@@ -35,7 +35,7 @@ function Products() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setUploadedImages([]);
-    setNewProduct("");
+    setName("");
     setCategory("");
     setDescription("");
   };
@@ -46,30 +46,34 @@ function Products() {
 
   const handleSaveProduct = async () => {
     if (
-      newProduct.trim() &&
+      name.trim() &&
       uploadedImages.length > 0 &&
       category &&
       description &&
       brandId
     ) {
+      // Construcción de URLs de Cloudinary a partir de los public_id de `uploadedImages`
+      const imageUrls = uploadedImages.map(publicId => 
+        `https://res.cloudinary.com/alphacode/image/upload/${publicId}`
+      );
+
       let product = {
-        newProduct,
-        uploadedImages,
+        name,
+        images: imageUrls,  // Ahora se envían URLs de imágenes en lugar de public_id
         category,
         description,
         brandId,
       };
-      console.log("producto que se envia:", product); // Verifica que contiene URLs
+      console.log("Producto que se envía:", product); // Verifica que contiene URLs
   
-      // Envía las URLs de Cloudinary en lugar de las imágenes en base64
-      await postProduct(newProduct, uploadedImages, category, description, brandId);
+      // Envía las URLs de Cloudinary en lugar de las imágenes en base64 o public_id
+      await postProduct(name, imageUrls, category, description, brandId);
       
       handleCloseModal();
     } else {
       alert("Por favor, complete todos los campos.");
     }
   };
-  
 
   const handleImageUpload = async (event) => {
     const files = Array.from(event.target.files);
@@ -80,7 +84,7 @@ function Products() {
 
       try {
         const response = await fetch(
-          `https://api.cloudinary.com/v1_1/AlphaCode/image/upload`,
+          `https://api.cloudinary.com/v1_1/alphacode/image/upload`,
           {
             method: "POST",
             body: formData,
@@ -133,12 +137,12 @@ function Products() {
           <div key={product.id} className={styles.productItem}>
             <span>{product.name}</span>
             {product.images &&
-              product.images.map((imageId, index) => (
-                <AdvancedImage
+              product.images.map((imageUrl, index) => (
+                <img
                   key={index}
-                  cldImg={getTransformedImage(imageId)}
-                  style={{ width: "50px", height: "50px", marginRight: "5px" }}
+                  src={imageUrl}
                   alt={product.name}
+                  style={{ width: "50px", height: "50px", marginRight: "5px" }}
                 />
               ))}
             <div className={styles.actions}>
@@ -165,8 +169,8 @@ function Products() {
             <label>Nombre del Producto</label>
             <input
               type="text"
-              value={newProduct}
-              onChange={(e) => setNewProduct(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className={styles.input}
             />
 
@@ -184,7 +188,6 @@ function Products() {
                 Seleccione imágenes
               </label>
             </div>
-
 
             {uploadedImages.length > 0 && (
               <div className={styles.preview}>
