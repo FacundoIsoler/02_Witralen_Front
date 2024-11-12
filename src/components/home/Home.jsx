@@ -20,7 +20,7 @@ function Home() {
             <FavProducts />
             <Carrousel />
             <Services />
-            <CarrouselMarca />
+            {/* <CarrouselMarca /> */}
             <Contact />
             <Map />
         </div>

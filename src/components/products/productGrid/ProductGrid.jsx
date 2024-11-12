@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import useProductStore from '../../../stores/adminStores/productStore';
 import styles from './ProductGrid.module.css';
 
 const ProductGrid = () => {
-    const products = [
-        { id: 1, name: 'Producto 1', img: 'https://via.placeholder.com/150' },
-        { id: 2, name: 'Producto 2', img: 'https://via.placeholder.com/150' },
-        // Add more products here
-    ];
+    const { products, loading, error, productList } = useProductStore();
+
+    useEffect(() => {
+        productList();
+    }, [productList]);
+
+    useEffect(() => {
+        console.log("Productos actualizados:", products);
+    }, [products]);
+
+    if (loading) return <div>Cargando Productos...</div>
+    if (error) return <div>Error: {error}</div>
 
     return (
         <div className={styles.grid}>
-            {products.map(product => (
+            {products.map((product) => (
                 <div key={product.id} className={styles.productCard}>
-                    <img src={product.img} alt={product.name} />
+                    <img
+                        src={
+                            Array.isArray(product.images)
+                                ? product.images[0]
+                                : product.image || 'https://via.placeholder.com/150'
+                        }
+                        alt={product.name}
+                    />
                     <h3>{product.name}</h3>
                 </div>
             ))}

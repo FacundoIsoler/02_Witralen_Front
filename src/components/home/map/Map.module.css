@@ -7,6 +7,7 @@
     align-items: center;
     overflow: hidden;
     box-sizing: border-box;
+    background-color: #F3F3F3;
 }
 
 /* Título */
@@ -16,7 +17,6 @@
     padding: 50px 0;
     background-color: #2D2F35;
     width: 100%;
-    margin-bottom: 4rem;
 }
 
 .tittleWidth{
@@ -34,6 +34,7 @@
 }
 
 .iframe {
+    margin: 4rem 0;
     height: 100%;
     max-width: 1000px;
     max-height: 600px;

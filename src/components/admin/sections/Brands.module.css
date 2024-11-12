@@ -2,7 +2,9 @@
     background-color: #EC671CCC;
     border-radius: 8px;
     padding: 20px;
-    ;
+    width: 100%;
+    max-width: 750px; /* Limita el ancho máximo */
+    margin: 0 auto; /* Centra en la pantalla */
 }
 
 .header {
@@ -16,6 +18,7 @@
 .title {
     position: absolute;
     left: 50%;
+    transform: translateX(-50%);
     color: white;
     font-size: 20px;
 }
@@ -100,7 +103,8 @@
     background-color: #ED772F;
     padding: 2rem;
     border-radius: 10px;
-    width: 50%;
+    width: 100%;
+    max-width: 500px; /* Ajuste del ancho máximo */
     text-align: left;
     color: white;
     position: relative;
@@ -203,4 +207,55 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .modal {
+        width: 90%;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .brandItem span {
+        font-size: 14px;
+    }
+
+    .saveBtn {
+        font-size: 16px;
+    }
+
+    .addBtn {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal {
+        padding: 1.5rem;
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+    .addBtn {
+        padding: 5px 8px;
+    }
+
+    .brandItem span {
+        font-size: 13px;
+    }
+
+    .saveBtn {
+        font-size: 14px;
+    }
 }

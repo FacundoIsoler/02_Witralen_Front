@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
 import useProductStore from "../../../stores/adminStores/productStore";
+import useBrandStore from "../../../stores/adminStores/brandStore";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { auto } from "@cloudinary/url-gen/actions/resize";
+import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
+import { AdvancedImage } from "@cloudinary/react";
 import styles from "./Products.module.css";
 
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: "AlphaCode"
+  }
+});
+
 function Products() {
-  const { products, productList, postProduct, deleteProduct, loading, error } =
-    useProductStore();
+  const { products, productList, postProduct, deleteProduct, loading, error } = useProductStore();
+  const { brands, brandList } = useBrandStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newProduct, setNewProduct] = useState("");
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [imageBase64Array, setImageBase64Array] = useState([]);
+  const [uploadedImages, setUploadedImages] = useState([]); // URLs de imágenes cargadas
   const [category, setCategory] = useState("");
+  const [brandId, setBrandId] = useState("");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
@@ -18,28 +29,15 @@ function Products() {
 
   const handleAddProduct = () => {
     setIsModalOpen(true);
+    brandList();
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedImages([]);
-    setImageBase64Array([]);
+    setUploadedImages([]);
     setNewProduct("");
     setCategory("");
     setDescription("");
-  };
-
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        resolve(reader.result);
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-    });
   };
 
   const handleDelete = (id) => {
@@ -49,37 +47,67 @@ function Products() {
   const handleSaveProduct = async () => {
     if (
       newProduct.trim() &&
-      imageBase64Array.length > 0 &&
+      uploadedImages.length > 0 &&
       category &&
-      description
+      description &&
+      brandId
     ) {
-      // Llamar a la función postProduct del store
-      await postProduct(newProduct, imageBase64Array, category, description);
-
-      // Limpiar el formulario y cerrar el modal
+      let product = {
+        newProduct,
+        uploadedImages,
+        category,
+        description,
+        brandId,
+      };
+      console.log("producto que se envia:", product); // Verifica que contiene URLs
+  
+      // Envía las URLs de Cloudinary en lugar de las imágenes en base64
+      await postProduct(newProduct, uploadedImages, category, description, brandId);
+      
       handleCloseModal();
     } else {
       alert("Por favor, complete todos los campos.");
     }
   };
+  
 
-  const handleImageChange = async (event) => {
+  const handleImageUpload = async (event) => {
     const files = Array.from(event.target.files);
-    setSelectedImages(files);
+    const uploadPromises = files.slice(0, 5 - uploadedImages.length).map(async (file) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "Witralen");
 
-    const base64Images = await Promise.all(
-      files.map((file) => convertToBase64(file))
-    );
-    setImageBase64Array(base64Images); // Guardar las imágenes como base64 en un array
+      try {
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/AlphaCode/image/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const data = await response.json();
+        return data.public_id; // Guardar solo el `public_id` de la imagen
+      } catch (error) {
+        console.error("Error al cargar la imagen:", error);
+        return null;
+      }
+    });
 
-    console.log("Imágenes seleccionadas (base64):", base64Images);
+    const newImageIds = await Promise.all(uploadPromises);
+    setUploadedImages((prev) => [
+      ...prev,
+      ...newImageIds.filter((id) => id !== null),
+    ]);
   };
 
-  const handleRemoveImage = (index) => {
-    const updatedImages = selectedImages.filter((_, i) => i !== index);
-    const updatedBase64 = imageBase64Array.filter((_, i) => i !== index);
-    setSelectedImages(updatedImages);
-    setImageBase64Array(updatedBase64);
+  // Generar una imagen transformada para mostrar en el frontend
+  const getTransformedImage = (imageId) => {
+    return cld
+      .image(imageId)
+      .format("auto") // Optimiza formato
+      .quality("auto") // Optimiza calidad
+      .resize(auto().gravity(autoGravity()).width(500).height(500)); // Redimensiona y auto-corta
   };
 
   if (loading) {
@@ -105,21 +133,21 @@ function Products() {
           <div key={product.id} className={styles.productItem}>
             <span>{product.name}</span>
             {product.images &&
-              product.images.map((image, index) => (
-                <img
+              product.images.map((imageId, index) => (
+                <AdvancedImage
                   key={index}
-                  src={URL.createObjectURL(image)}
-                  alt={product.name}
+                  cldImg={getTransformedImage(imageId)}
                   style={{ width: "50px", height: "50px", marginRight: "5px" }}
+                  alt={product.name}
                 />
               ))}
             <div className={styles.actions}>
-              <button className={styles.editBtn}>✏️</button>
+              <button className={styles.editBtn}>✏</button>
               <button
                 onClick={() => handleDelete(product.id)}
                 className={styles.deleteBtn}
               >
-                🗑️
+                🗑
               </button>
             </div>
           </div>
@@ -142,13 +170,13 @@ function Products() {
               className={styles.input}
             />
 
-            <label>Ingresar Imagen</label>
+            <label>Ingresar Imágenes (máximo 5)</label>
             <div className={styles.uploadWrapper}>
               <input
                 type="file"
                 accept="image/*"
                 multiple
-                onChange={handleImageChange}
+                onChange={handleImageUpload}
                 className={styles.uploadInput}
                 id="file-upload"
               />
@@ -157,19 +185,22 @@ function Products() {
               </label>
             </div>
 
-            {selectedImages.length > 0 && (
+
+            {uploadedImages.length > 0 && (
               <div className={styles.preview}>
                 <p>Vista previa:</p>
                 <div className={styles.imagePreviewContainer}>
-                  {selectedImages.map((image, index) => (
+                  {uploadedImages.map((imageId, index) => (
                     <div key={index} className={styles.previewItem}>
-                      <img
-                        src={URL.createObjectURL(image)}
+                      <AdvancedImage
+                        cldImg={getTransformedImage(imageId)}
                         alt={`Vista previa ${index}`}
                         style={{ width: "100px", height: "100px" }}
                       />
                       <button
-                        onClick={() => handleRemoveImage(index)}
+                        onClick={() => setUploadedImages((prev) =>
+                          prev.filter((_, i) => i !== index)
+                        )}
                         className={styles.removeImageBtn}
                       >
                         ✖
@@ -179,6 +210,7 @@ function Products() {
                 </div>
               </div>
             )}
+
             <label>Ingresar Categoría</label>
             <select
               className={styles.select}
@@ -188,6 +220,18 @@ function Products() {
               <option value="">Seleccione...</option>
               <option value="categoria1">Categoría 1</option>
               <option value="categoria2">Categoría 2</option>
+            </select>
+
+            <label>Marca</label>
+            <select
+              className={styles.select}
+              value={brandId}
+              onChange={(e) => setBrandId(e.target.value)}
+            >
+              <option value="">Seleccione...</option>
+              {brands.map((brand) => (
+                <option key={brand.id} value={brand.id}>{brand.name}</option>
+              ))}
             </select>
 
             <label>Descripción del Producto</label>

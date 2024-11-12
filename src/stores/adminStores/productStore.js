@@ -33,14 +33,14 @@ const useProductStore = create((set, get) => ({
     }
   },
 
-  postProduct: async (name, image, category, description, brandId) => {
+  postProduct: async (name, images, category, description, brandId) => {
     set({ loading: true, error: null });
     try {
       const response = await axios.post(
         "http://localhost:3000/product/newProduct",
-        { name, image, category, description, brandId }
+        { name, images, category, description, brandId } // Aquí, `images` debe ser un array de URLs
       );
-
+  
       set((state) => ({
         products: [...state.products, response.data],
         error: null,
@@ -65,6 +65,7 @@ const useProductStore = create((set, get) => ({
       set({ loading: false });
     }
   },
+  
 
   deleteProduct: async (id) => {
     set({ loading: true, error: null });

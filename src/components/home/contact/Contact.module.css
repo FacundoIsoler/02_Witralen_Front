@@ -40,6 +40,8 @@
 .tittleWidth{
     width: 70%;
     background-color: #E05A00;
+    display: grid;
+    place-items: center;
 }
 
 .title h2 {
