@@ -48,7 +48,7 @@ function Services() {
     const service = services.find((s) => s.id === id);
     if (service) {
       setName(service.name);
-      setUploadedImages(service.images || []); // Asumimos que `images` contiene URLs
+      setUploadedImages(service.images || []); 
       setCategory(service.category);
       setBrandId(service.brandId);
       setDescription(service.description);
