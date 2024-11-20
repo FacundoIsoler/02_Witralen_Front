@@ -265,8 +265,14 @@ function Products() {
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value="">Seleccione...</option>
-              <option value="categoria1">Categoría 1</option>
-              <option value="categoria2">Categoría 2</option>
+              <option value="Protector de motor">Protector de motor</option>
+              <option value="Calibrador de neumáticos">Calibrador de neumáticos</option>
+              <option value="Purgador de aire">Purgador de aire</option>
+              <option value="Enfriador ecológico">Enfriador ecológico</option>
+              <option value="Aire acondicionado">Aire acondicionado</option>
+              <option value="Estufa">Estufa</option>
+              <option value="Satelital">Satelital</option>
+              <option value="Monitor de neumáticos">Monitor de neumáticos</option>
             </select>
 
             <label>Marca</label>

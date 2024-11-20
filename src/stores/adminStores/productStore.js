@@ -6,15 +6,19 @@ const useProductStore = create((set, get) => ({
   loading: false,
   error: null,
 
-  productList: async () => {
+  productList: async (filters = {}, page = 1, limit = 10) => {
     set({ loading: true, error: null });
     try {
-
       const response = await axios.post(
-        "http://localhost:3000/product/showProducts"
+        `http://localhost:3000/product/showProducts?page=${page}&limit=${limit}`,
+        filters
       );
 
-      set({ products: response.data, error: null });
+      set({
+        products: response.data.products || [],
+        hasMore: response.data.hasMore,
+        error: null,
+      });
     } catch (error) {
       if (error.response) {
         console.error("Error al obtener productos:", error.response.data);
@@ -38,9 +42,9 @@ const useProductStore = create((set, get) => ({
     try {
       const response = await axios.post(
         "http://localhost:3000/product/newProduct",
-        { name, images, category, description, brandId } // Aquí, `images` debe ser un array de URLs
+        { name, images, category, description, brandId }
       );
-  
+
       set((state) => ({
         products: [...state.products, response.data],
         error: null,
@@ -84,7 +88,9 @@ const useProductStore = create((set, get) => ({
     } catch (error) {
       if (error.response) {
         console.error("Error al modificar Producto:", error.response.data);
-        set({ error: error.response.data.error || "Error al modificar Producto" });
+        set({
+          error: error.response.data.error || "Error al modificar Producto",
+        });
       } else if (error.request) {
         console.error(
           "Error al modificar Producto: No se recibió respuesta del servidor"
@@ -98,7 +104,7 @@ const useProductStore = create((set, get) => ({
       set({ loading: false });
     }
   },
-  
+
   deleteProduct: async (id) => {
     set({ loading: true, error: null });
     try {
