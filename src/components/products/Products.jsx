@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './sidebar/Sidebar';
 import SearchBar from './searchBar/SearchBar';
 import ProductGrid from './productGrid/ProductGrid';
 import Pagination from './pagination/Pagination';
+import useProductStore from '../../stores/adminStores/productStore';
 import styles from './Products.module.css';
 
 const Products = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 3;
+    const { productList, hasMore } = useProductStore();
+    const itemsPerPage = 10;
+
+    useEffect(() => {
+        productList({}, currentPage, itemsPerPage);
+    }, [currentPage, productList]);
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -21,7 +27,7 @@ const Products = () => {
                 <ProductGrid />
                 <Pagination 
                     currentPage={currentPage}
-                    totalPages={totalPages}
+                    hasMore={hasMore}
                     onPageChange={handlePageChange}
                 />
             </div>
