@@ -37,6 +37,7 @@
     color: black;
     font-weight: bold;
     display: inline-block;
+    font-size: 20px;
 }
 
 .navItem a::after {

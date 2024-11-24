@@ -13,14 +13,14 @@ const Services = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.title} data-aos="fade-right" data-aos-delay="500">
+            <div className={styles.title} data-aos="fade-right" data-aos-delay="200">
                 <div className={styles.tittleWidth}>
-                    <h2>Nuestros Servicios</h2>
+                    <h3>Nuestros Servicios</h3>
                 </div>
             </div>
             <div className={styles.services}>
                 {/* Servicio 1 */}
-                <div className={`${styles.serviceItem} ${styles.alternateLeft}`}  data-aos="fade-left" data-aos-delay="500">
+                <div className={`${styles.serviceItem} ${styles.alternateLeft}`}  data-aos="fade-left" data-aos-delay="200">
                     <img src={instalacionProfesional} alt="Instalación Profesional" className={styles.image} />
                     <div className={styles.textContainer}>
                         <h3>Instalación Profesional</h3>
@@ -29,7 +29,7 @@ const Services = () => {
                 </div>
 
                 {/* Servicio 2 */}
-                <div className={`${styles.serviceItem} ${styles.alternateRight}`}  data-aos="fade-right" data-aos-delay="800">
+                <div className={`${styles.serviceItem} ${styles.alternateRight}`}  data-aos="fade-right" data-aos-delay="500">
                     <div className={styles.textContainer}>
                         <h3>Consultoría y Asesoramiento</h3>
                         <p>Ofrecemos un servicio completo de asesoramiento técnico...</p>

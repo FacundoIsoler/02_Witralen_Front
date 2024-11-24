@@ -42,7 +42,7 @@ const CustomRightArrow = ({ onClick }) => {
 const FavProducts = () => {
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>Novedades</h2>
+            <h3 className={styles.title}>Novedades</h3>
             <div className={styles.carouselContainer}>
                 <Carousel
                     responsive={responsive}
@@ -64,7 +64,7 @@ const FavProducts = () => {
                                 alt={product.name}
                                 className={styles.productImage}
                             />
-                            <h3 className={styles.productName}>{product.name}</h3>
+                            <h2 className={styles.productName}>{product.name}</h2>
                             <button
                                 className={styles.productButton}
                                 onClick={() => window.location.href = product.link}

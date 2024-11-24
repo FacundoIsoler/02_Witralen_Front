@@ -4,9 +4,9 @@ import styles from './Map.module.css';
 function Map() {
     return (
         <div className={styles.container}>
-            <div className={styles.title} data-aos="fade-up" data-aos-delay="500">
+            <div className={styles.title} data-aos="fade-up" data-aos-delay="200">
                 <div className={styles.tittleWidth}>
-                    <h2 >Ubicación</h2>
+                    <h3 >Ubicación</h3>
                 </div>
             </div>
             <iframe

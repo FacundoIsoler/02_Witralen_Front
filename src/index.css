@@ -10,4 +10,15 @@ html, body, #root {
   min-height: 100vh;
   max-width: 100vw;
   overflow-x: hidden;
+  font-family: "Didact Gothic", sans-serif;
+  font-weight: bold;
+  font-style: normal;
+}
+
+h3{
+  font-size: 60px !important;
+}
+
+h2{
+  font-size: 35px !important;
 }

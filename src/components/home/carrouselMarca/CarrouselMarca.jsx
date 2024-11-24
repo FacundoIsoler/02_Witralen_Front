@@ -17,12 +17,17 @@ import LogosCss3 from '~icons/logos/css-3';
 import LogosAndroidVertical from '~icons/logos/android-vertical';
 import LogosApple from '~icons/logos/apple';
 
+import vigia from '../../../assets/brands/vigia.png';
+import gestya from '../../../assets/brands/gestya.png';
+import fulmar from '../../../assets/brands/fulmar.png';
+import rutatrol from '../../../assets/brands/rutatrol.png';
+import viesa from '../../../assets/brands/viesa.jpg';
+import vdo from '../../../assets/brands/vdo.svg';
+
+
 function CarrouselMarca() {
     const logos = [
-        <LogosWordpressIcon />, <LogosRedux />, <LogosXcode />, <LogosReact />,
-        <LogosSequelize />, <LogosPostmanIcon />, <LogosPostgresql />, <LogosNodejs />,
-        <LogosJavascript />, <LogosHtml5 />, <LogosGithubIcon />, <LogosGit />,
-        <LogosExpo />, <LogosCss3 />, <LogosAndroidVertical />, <LogosApple />
+        vigia, gestya, fulmar, rutatrol, viesa, vdo
     ];
 
     const totalBrands = logos.length;
@@ -38,11 +43,15 @@ function CarrouselMarca() {
                 }}
             >
                 <ul className={s.brands}>
-                    {logos.map((Logo, index) => (
-                        <li key={index} className={s.brandLogo}>{Logo}</li>
+                    {logos.map((logo, index) => (
+                        <li key={index} className={s.brandLogo}>
+                            <img src={logo} alt={`Logo ${index}`} />
+                        </li>
                     ))}
-                    {logos.map((Logo, index) => (
-                        <li key={`duplicate-${index}`} className={s.brandLogo}>{Logo}</li>
+                    {logos.map((logo, index) => (
+                        <li key={`duplicate-${index}`} className={s.brandLogo}>
+                            <img src={logo} alt={`Duplicate Logo ${index}`} />
+                        </li>
                     ))}
                 </ul>
             </div>
@@ -51,3 +60,4 @@ function CarrouselMarca() {
 }
 
 export default CarrouselMarca;
+

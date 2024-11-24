@@ -13,7 +13,7 @@ function Contact() {
         <div className={styles.container}>
             <div className={styles.title} data-aos="fade-left" data-aos-delay="500">
                 <div className={styles.tittleWidth}>
-                    <h2 >Contacto</h2>
+                    <h3 >Contacto</h3>
                 </div>
             </div>
             <div className={styles.contactContainer}>

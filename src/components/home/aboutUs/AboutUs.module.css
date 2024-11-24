@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 20px; /* Ajuste de padding para más espacio */
+    padding: 40px 20px;
     background-color: #F3F3F3;
     width: 100%;
     height: auto;
@@ -11,17 +11,19 @@
 
 .content {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 .textSection {
     flex: 1;
     margin-right: 20px;
     min-width: 300px;
+    max-width: 70%;
     opacity: 0;
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
     transform: translateY(50px);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
@@ -32,11 +34,14 @@
 }
 
 .heading {
-    font-size: 32px;
-    font-weight: bold;
+    /* font-size: 60px !important; */
     color: #333;
-    text-align: left;
     margin-bottom: 15px;
+}
+
+.text{
+    font-size: 25px !important;
+text-align: center;
 }
 
 .line {
@@ -46,37 +51,23 @@
     margin-bottom: 25px;
 }
 
-.visionMission {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.vision, .mission {
-    position: relative;
-    padding: 20px;
-    border-left: 4px solid orange;
-    background: #f9f9f9;
-    margin-bottom: 20px;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 1.5s ease, transform 0.8s ease;
-}
-
-.vision.visible, .mission.visible {
+.vision.visible,
+.mission.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
 
-.vision h3, .mission h3 {
+.vision h3,
+.mission h3 {
     font-size: 26px;
     font-weight: bold;
     color: #333;
     margin-bottom: 10px;
 }
 
-.vision p, .mission p {
+.vision p,
+.mission p {
     font-size: 16px;
     line-height: 1.8;
     color: #555;
