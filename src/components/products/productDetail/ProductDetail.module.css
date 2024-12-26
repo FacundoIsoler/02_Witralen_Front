@@ -1,0 +1,130 @@
+.mainScreen {
+    display: flex;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.detailContainer {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    padding: 20px;
+    gap: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leftSection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.mainImage {
+    width: 500px;
+    height: 300px;
+    object-fit: contain;
+    border-radius: 8px;
+    padding-right: 50px;
+}
+
+.brandContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.brandLabel {
+    font-size: 0.9rem;
+    color: #888;
+    font-weight: bold;
+}
+
+.brandName {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.colorSwatches {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.colorLabel {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.colorBox {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+}
+
+.rightSection {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #555;
+    background-color: #FF6F00;
+    color: white;
+    padding: 10px;
+}
+
+.description {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+    text-align: start;
+}
+
+.advantagesList {
+    list-style: disc;
+    padding-left: 20px;
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.thumbnailSection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.thumbnail {
+    width: 100%;
+    max-width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.thumbnail:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.thumbnail.activeThumbnail {
+    border: 2px solid #FF6F00;
+}
+

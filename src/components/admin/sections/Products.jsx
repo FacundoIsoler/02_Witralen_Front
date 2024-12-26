@@ -173,6 +173,7 @@ function Products() {
         {products.map((product) => (
           <div key={product.id} className={styles.productItem}>
             <span>{product.name}</span>
+            {console.log(product)}
             {product.images &&
               product.images.map((imageUrl, index) => (
                 <img

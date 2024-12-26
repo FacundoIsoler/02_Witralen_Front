@@ -8,11 +8,12 @@ import styles from './Products.module.css';
 
 const Products = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const { productList, hasMore } = useProductStore();
+    const { productList, hasMore, getCategories } = useProductStore();
     const itemsPerPage = 10;
 
     useEffect(() => {
         productList({}, currentPage, itemsPerPage);
+        getCategories();
     }, [currentPage, productList]);
 
     const handlePageChange = (newPage) => {

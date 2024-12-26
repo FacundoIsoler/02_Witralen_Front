@@ -1,20 +1,31 @@
 .searchBar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: white;
-    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin: 0 auto;
+    max-width: 80%;
 }
 
 .filter {
     padding: 0.5rem;
     border: 1px solid #FF6F00;
+    border-radius: 4px;
+    background-color: #FF6F00;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .searchInput {
-    width: 100%;
+    flex-grow: 1;
     padding: 0.5rem;
-    margin-left: 1rem;
+    margin-left: 0.5rem;
     border: 1px solid #FF6F00;
+    border-radius: 4px;
+    outline: none;
+}
+
+.searchInput::placeholder {
+    color: #BDBDBD;
 }

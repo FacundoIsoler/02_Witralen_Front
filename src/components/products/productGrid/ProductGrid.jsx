@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
 import useProductStore from '../../../stores/adminStores/productStore';
 import styles from './ProductGrid.module.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const ProductGrid = () => {
     const { products, loading, error, productList } = useProductStore();
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         productList();
@@ -13,13 +17,17 @@ const ProductGrid = () => {
         console.log("Productos actualizados:", products);
     }, [products]);
 
+    const handleProductClick = (product) => {
+        navigate(`/products/${product.id}`, { state: { product } });
+    };
+
     if (loading) return <div>Cargando Productos...</div>
     if (error) return <div>Error: {error}</div>
 
     return (
         <div className={styles.grid}>
             {products.map((product) => (
-                <div key={product.id} className={styles.productCard}>
+                <div key={product.id} className={styles.productCard} onClick={() => handleProductClick(product)}>
                     <img
                         src={
                             Array.isArray(product.images)
@@ -28,7 +36,7 @@ const ProductGrid = () => {
                         }
                         alt={product.name}
                     />
-                    <h3>{product.name}</h3>
+                    <p className={styles.productName}>{product.name}</p>
                 </div>
             ))}
         </div>

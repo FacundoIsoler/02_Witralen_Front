@@ -8,6 +8,7 @@ import Dashboard from "./components/admin/Dashboard.jsx";
 // import DashboardUser from "./components/user/dashboard/DashboarUser.jsx";
 import './app.css';
 import Products from "./components/products/Products.jsx";
+import ProductDetail from "./components/products/productDetail/ProductDetail.jsx";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
 
           {/* admin */}
           <Route path="/admin" element={<Dashboard />} />

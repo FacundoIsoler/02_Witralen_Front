@@ -12,5 +12,12 @@
 
 .productCard img {
     width: 100%;
-    height: auto;
+    height: 70%;
+    object-fit: contain;
+}
+
+
+.productName{
+    font-size: 30px;
+    color: black;
 }

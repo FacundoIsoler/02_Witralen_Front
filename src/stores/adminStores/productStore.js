@@ -3,6 +3,8 @@ import axios from "axios";
 
 const useProductStore = create((set, get) => ({
   products: [],
+  categories: [],
+  brands: [],
   loading: false,
   error: null,
 
@@ -36,6 +38,26 @@ const useProductStore = create((set, get) => ({
       set({ loading: false });
     }
   },
+
+  getCategories: async () => {
+    const { products } = get();
+  
+    // Verifica si los productos ya están disponibles
+    if (!products || products.length === 0) {
+      console.warn("No products found. Waiting for products to be loaded...");
+      return;
+    }
+  
+    // Extrae categorías únicas usando un Set
+    const categories = [...new Set(products.map((product) => product.category))];
+  
+    console.log("Extracted unique categories:", categories);
+  
+    // Actualiza el estado con las categorías únicas
+    set({ categories });
+  },
+  
+  
 
   postProduct: async (name, images, category, description, brandId) => {
     set({ loading: true, error: null });

@@ -1,9 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useBrandStore from "../../../stores/adminStores/brandStore";
 import useProductStore from "../../../stores/adminStores/productStore";
+import useRandomProductStore from "../../../stores/randomProductStore";
 import styles from "./Sidebar.module.css";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+
   const { brands, brandList, loading, error } = useBrandStore((state) => ({
     brands: state.brands,
     brandList: state.brandList,
@@ -11,62 +18,137 @@ const Sidebar = () => {
     error: state.error,
   }));
 
-  const { productList } = useProductStore();
+  const { productList, getCategories, categories } = useProductStore((state) => ({
+    categories: state.categories,
+    productList: state.productList,
+    getCategories: state.getCategories,
+  }));
+
+  const {
+    randomProducts,
+    fetchRandomProducts,
+    loading: randomLoading,
+    error: randomError,
+  } = useRandomProductStore((state) => ({
+    randomProducts: state.randomProducts,
+    fetchRandomProducts: state.fetchRandomProducts,
+    loading: state.loading,
+    error: state.error,
+  }));
 
   useEffect(() => {
-    brandList();
-  }, [brandList]);
+    async function initializeSidebar() {
+      await brandList();
+      await fetchRandomProducts();
+      getCategories();
+    }
+    initializeSidebar();
+  }, [brandList, fetchRandomProducts, getCategories]);
+
+  // Combina ambos filtros y aplica a productList
+  const applyFilters = (category, brandId) => {
+    const filters = {};
+    if (category && category !== "all") filters.category = category;
+    if (brandId && brandId !== "all") filters.brandId = brandId;
+
+    productList(filters);
+    navigate("/products", { state: { filterType: "mixed", filters } });
+  };
 
   const handleBrandClick = (brandId) => {
-    productList({ brandId });
+    setSelectedBrand(brandId);
+    applyFilters(selectedCategory, brandId);
   };
 
   const handleCategoryClick = (category) => {
-    productList({ category });
+    setSelectedCategory(category);
+    applyFilters(category, selectedBrand);
+  };
+
+  const handleAllCategoriesClick = () => {
+    setSelectedCategory("all");
+    applyFilters("all", selectedBrand);
+  };
+
+  const handleAllBrandsClick = () => {
+    setSelectedBrand("all");
+    applyFilters(selectedCategory, "all");
+  };
+
+  const handleProductClick = (product) => {
+    navigate(`/products/${product.id}`, { state: { product } });
   };
 
   return (
     <div className={styles.sidebar}>
-      <h2>Categorías</h2>
+      <h2 className={styles.categoryTittle}>Categorías</h2>
       <ul className={styles.categoryList}>
-      {[
-          "Protector de motor",
-          "Calibrador de neumáticos",
-          "Purgador de aire",
-          "Enfriador ecológico",
-          "Aire acondicionado",
-          "Estufa",
-          "Satelital",
-          "Monitor de neumáticos",
-        ].map((category) => (
+        <li
+          onClick={handleAllCategoriesClick}
+          className={`${styles.categoryItem} ${
+            selectedCategory === "all" ? styles.selectedItem : ""
+          }`}
+        >
+          Todas las categorías
+        </li>
+        {categories.map((category) => (
           <li
             key={category}
             onClick={() => handleCategoryClick(category)}
-            className={styles.categoryItem}
+            className={`${styles.categoryItem} ${
+              selectedCategory === category ? styles.selectedItem : ""
+            }`}
           >
             {category}
           </li>
         ))}
       </ul>
-      <h2>Marcas</h2>
+      <h2 className={styles.categoryTittle}>Marcas</h2>
       {loading ? (
         <p>Cargando marcas...</p>
       ) : error ? (
         <p>Error: {error}</p>
       ) : (
         <ul className={styles.brandList}>
+          <li
+            onClick={handleAllBrandsClick}
+            className={`${styles.brandItem} ${
+              selectedBrand === "all" ? styles.selectedItem : ""
+            }`}
+          >
+            Todas las marcas
+          </li>
           {brands.map((brand) => (
             <li
               key={brand.id}
               onClick={() => handleBrandClick(brand.id)}
-              className={styles.brandItem}
+              className={`${styles.brandItem} ${
+                selectedBrand === brand.id ? styles.selectedItem : ""
+              }`}
             >
               {brand.name}
             </li>
           ))}
         </ul>
       )}
-      <h2>Productos Recientes</h2>
+      <h2 className={styles.categoryTittle}>Productos Recomendados</h2>
+      {randomLoading ? (
+        <p>Cargando productos...</p>
+      ) : randomError ? (
+        <p>Error: {randomError}</p>
+      ) : (
+        <ul className={styles.productList}>
+          {randomProducts.map((product) => (
+            <li
+              key={product.id}
+              onClick={() => handleProductClick(product)}
+              className={styles.productItem}
+            >
+              {product.name}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
