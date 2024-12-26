@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from './sidebar/Sidebar';
-import SearchBar from './searchBar/SearchBar';
-import ProductGrid from './productGrid/ProductGrid';
-import Pagination from './pagination/Pagination';
-import useProductStore from '../../stores/adminStores/productStore';
-import styles from './Products.module.css';
+import React, { useState, useEffect } from "react";
+import Sidebar from "./sidebar/Sidebar";
+import SearchBar from "./searchBar/SearchBar";
+import ProductGrid from "./productGrid/ProductGrid";
+import Pagination from "./pagination/Pagination";
+import useProductStore from "../../stores/adminStores/productStore";
+import styles from "./Products.module.css";
 
 const Products = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -24,13 +24,19 @@ const Products = () => {
         <div className={styles.mainScreen}>
             <Sidebar />
             <div className={styles.content}>
-                <SearchBar />
-                <ProductGrid />
-                <Pagination 
-                    currentPage={currentPage}
-                    hasMore={hasMore}
-                    onPageChange={handlePageChange}
-                />
+                <div className={styles.layout}>
+                    <div className={styles.searchBarContainer}>
+                        <SearchBar />
+                    </div>
+                    <div className={styles.productsContainer}>
+                        <ProductGrid />
+                        <Pagination
+                            currentPage={currentPage}
+                            hasMore={hasMore}
+                            onPageChange={handlePageChange}
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     );

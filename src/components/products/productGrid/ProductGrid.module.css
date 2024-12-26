@@ -1,3 +1,7 @@
+.container {
+    width: 100%;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -6,12 +10,11 @@
 
 .productCard {
     border: 1px solid #FF6F00;
-    padding: 1rem;
     text-align: center;
 }
 
 .productCard img {
-    width: 100%;
+    width: 50%;
     height: 70%;
     object-fit: contain;
 }

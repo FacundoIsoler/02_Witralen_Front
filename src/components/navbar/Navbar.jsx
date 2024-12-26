@@ -16,8 +16,7 @@ const Navbar = () => {
             </div>
             <ul className={s.navLinks}>
                 <li className={s.navItem}><a href="/">Home</a></li>
-                <li className={s.navItem}><a href="/products">Productos</a></li>
-                <li className={s.navItem}><a href="/servicios">Servicios</a></li>
+                <li className={s.navItem}><a href="/products">Catálogo</a></li>
                 <li className={s.navItem}><a href="/contacto">Contacto</a></li>
             </ul>
             <div className={s.menuToggle} onClick={toggleMenu}>
@@ -29,8 +28,7 @@ const Navbar = () => {
                 <div className={s.mobileMenu}>
                     <ul className={s.mobileNavLinks}>
                         <li className={s.navItem}><a href="/">Home</a></li>
-                        <li className={s.navItem}><a href="products">Productos</a></li>
-                        <li className={s.navItem}><a href="/servicios">Servicios</a></li>
+                        <li className={s.navItem}><a href="/products">Catálogo</a></li>
                         <li className={s.navItem}><a href="/contacto">Contacto</a></li>
                     </ul>
                 </div>

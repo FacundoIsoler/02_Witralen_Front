@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useBrandStore from "../../../stores/adminStores/brandStore";
 import useProductStore from "../../../stores/adminStores/productStore";
 import useRandomProductStore from "../../../stores/randomProductStore";
+import useServiceStore from "../../../stores/adminStores/serviceStore";
 import styles from "./Sidebar.module.css";
 
 const Sidebar = () => {
@@ -24,6 +25,13 @@ const Sidebar = () => {
     getCategories: state.getCategories,
   }));
 
+  const { services, serviceList, loading: serviceLoading, error: serviceError } = useServiceStore((state) => ({
+    services: state.services,
+    serviceList: state.serviceList,
+    loading: state.loading,
+    error: state.error,
+  }));
+
   const {
     randomProducts,
     fetchRandomProducts,
@@ -41,11 +49,11 @@ const Sidebar = () => {
       await brandList();
       await fetchRandomProducts();
       getCategories();
+      serviceList(); // Load services
     }
     initializeSidebar();
-  }, [brandList, fetchRandomProducts, getCategories]);
+  }, [brandList, fetchRandomProducts, getCategories, serviceList]);
 
-  // Combina ambos filtros y aplica a productList
   const applyFilters = (category, brandId) => {
     const filters = {};
     if (category && category !== "all") filters.category = category;
@@ -53,6 +61,14 @@ const Sidebar = () => {
 
     productList(filters);
     navigate("/products", { state: { filterType: "mixed", filters } });
+  };
+
+  const applyServiceFilters = (brandId) => {
+    const filters = {};
+    if (brandId && brandId !== "all") filters.brandId = brandId;
+
+    serviceList(filters);
+    navigate("/services", { state: { filterType: "services", filters } });
   };
 
   const handleBrandClick = (brandId) => {
@@ -73,6 +89,16 @@ const Sidebar = () => {
   const handleAllBrandsClick = () => {
     setSelectedBrand("all");
     applyFilters(selectedCategory, "all");
+  };
+
+  const handleServiceBrandClick = (brandId) => {
+    setSelectedBrand(brandId);
+    serviceList({ brandId });
+  };
+
+  const handleAllServicesClick = () => {
+    setSelectedBrand("all");
+    applyServiceFilters("all");
   };
 
   const handleProductClick = (product) => {
@@ -122,6 +148,34 @@ const Sidebar = () => {
             <li
               key={brand.id}
               onClick={() => handleBrandClick(brand.id)}
+              className={`${styles.brandItem} ${
+                selectedBrand === brand.id ? styles.selectedItem : ""
+              }`}
+            >
+              {brand.name}
+            </li>
+          ))}
+        </ul>
+      )}
+      <h2 className={styles.categoryTittle}>Servicios</h2>
+      {serviceLoading ? (
+        <p>Cargando servicios...</p>
+      ) : serviceError ? (
+        <p>Error: {serviceError}</p>
+      ) : (
+        <ul className={styles.brandList}>
+          <li
+            onClick={handleAllServicesClick}
+            className={`${styles.brandItem} ${
+              selectedBrand === "all" ? styles.selectedItem : ""
+            }`}
+          >
+            Todos los servicios
+          </li>
+          {brands.map((brand) => (
+            <li
+              key={brand.id}
+              onClick={() => handleServiceBrandClick(brand.id)}
               className={`${styles.brandItem} ${
                 selectedBrand === brand.id ? styles.selectedItem : ""
               }`}
