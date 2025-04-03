@@ -7,6 +7,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin: 0 1rem 1REM;
+
 }
 
 .layout {
@@ -15,10 +17,14 @@
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
+    border: #FF6F00 3px solid;
+    border-radius: 1%;
+    background-color: #dddbdb3f;
 }
 
 .productsContainer {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
 }

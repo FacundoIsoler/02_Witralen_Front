@@ -13,7 +13,9 @@
 .detailContainer {
     display: flex;
     flex-direction: row;
-    background-color: #fff;
+    border: #FF6F00 3px solid;
+    border-radius: 1%;
+    background-color: #dddbdb3f;
     padding: 20px;
     gap: 20px;
     border-radius: 8px;
@@ -127,4 +129,3 @@
 .thumbnail.activeThumbnail {
     border: 2px solid #FF6F00;
 }
-

@@ -17,7 +17,6 @@ const Navbar = () => {
             <ul className={s.navLinks}>
                 <li className={s.navItem}><a href="/">Home</a></li>
                 <li className={s.navItem}><a href="/products">Catálogo</a></li>
-                <li className={s.navItem}><a href="/contacto">Contacto</a></li>
             </ul>
             <div className={s.menuToggle} onClick={toggleMenu}>
                 <span className={s.menuIcon}></span>
@@ -29,7 +28,6 @@ const Navbar = () => {
                     <ul className={s.mobileNavLinks}>
                         <li className={s.navItem}><a href="/">Home</a></li>
                         <li className={s.navItem}><a href="/products">Catálogo</a></li>
-                        <li className={s.navItem}><a href="/contacto">Contacto</a></li>
                     </ul>
                 </div>
             )}

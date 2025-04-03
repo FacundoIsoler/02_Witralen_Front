@@ -29,6 +29,7 @@ const Products = () => {
                         <SearchBar />
                     </div>
                     <div className={styles.productsContainer}>
+                        
                         <ProductGrid />
                         <Pagination
                             currentPage={currentPage}

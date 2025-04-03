@@ -1,0 +1,59 @@
+.uploaderWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dropzone {
+    padding: 20px;
+    border: 2px dashed #aaa;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #fafafa;
+}
+
+.manualInput {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.manualInput input {
+    flex: 1;
+    padding: 8px;
+}
+
+.previewList {
+    margin-top: 1rem;
+}
+
+.imageGrid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.imageWrapper {
+    position: relative;
+}
+
+.previewImg {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.removeBtn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 12px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}

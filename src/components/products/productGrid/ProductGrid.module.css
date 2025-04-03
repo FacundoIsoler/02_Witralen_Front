@@ -9,7 +9,8 @@
 }
 
 .productCard {
-    border: 1px solid #FF6F00;
+    /* border: 1px solid #FF6F00; */
+    background-color: white;
     text-align: center;
 }
 

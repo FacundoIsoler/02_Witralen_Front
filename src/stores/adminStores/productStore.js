@@ -62,10 +62,14 @@ const useProductStore = create((set, get) => ({
   postProduct: async (name, images, category, description, brandId) => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.post(
-        "http://localhost:3000/product/newProduct",
-        { name, images, category, description, brandId }
-      );
+      const response = 
+      await axios.post("http://localhost:3000/product/newProduct", {
+        name,
+        images: Array.isArray(images) ? images : [],
+        category,
+        description,
+        brandId,
+      });
 
       set((state) => ({
         products: [...state.products, response.data],

@@ -1,33 +1,21 @@
 import React from "react";
 import s from "./CarrouselMarca.module.css";
-import LogosXcode from '~icons/logos/xcode';
-import LogosWordpressIcon from '~icons/logos/wordpress-icon';
-import LogosRedux from '~icons/logos/redux';
-import LogosReact from '~icons/logos/react';
-import LogosSequelize from '~icons/logos/sequelize';
-import LogosPostmanIcon from '~icons/logos/postman-icon';
-import LogosPostgresql from '~icons/logos/postgresql';
-import LogosNodejs from '~icons/logos/nodejs';
-import LogosJavascript from '~icons/logos/javascript';
-import LogosHtml5 from '~icons/logos/html-5';
-import LogosGithubIcon from '~icons/logos/github-icon';
-import LogosGit from '~icons/logos/git';
-import LogosExpo from '~icons/logos/expo';
-import LogosCss3 from '~icons/logos/css-3';
-import LogosAndroidVertical from '~icons/logos/android-vertical';
-import LogosApple from '~icons/logos/apple';
 
-import vigia from '../../../assets/brands/vigia.png';
 import gestya from '../../../assets/brands/gestya.png';
 import fulmar from '../../../assets/brands/fulmar.png';
 import rutatrol from '../../../assets/brands/rutatrol.png';
-import viesa from '../../../assets/brands/viesa.jpg';
-import vdo from '../../../assets/brands/vdo.svg';
+import viesa from '../../../assets/brands/viesa.png';
+import vdo from '../../../assets/brands/vdo.png';
+import racetruck from '../../../assets/brands/racetruck.png';
+import vitran from '../../../assets/brands/vitran.png';
+import airtronic from '../../../assets/brands/airtronic.png';
+import voryl from '../../../assets/brands/voryl.png';
+import colven from '../../../assets/brands/colven.png';
 
 
 function CarrouselMarca() {
     const logos = [
-        vigia, gestya, fulmar, rutatrol, viesa, vdo
+        gestya, fulmar, rutatrol, viesa, vdo, racetruck, vitran, airtronic, voryl, colven
     ];
 
     const totalBrands = logos.length;

@@ -1,33 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./components/home/Home.jsx";
-// import AdminHome from "./components/admin/dashborard/AdminHome.jsx";
-// import SignUpStepsContainer from "./components/signUp/steps/SignUpStepsContainer.jsx";
-// import Users from "./components/admin/dashborard/users/Users.jsx";
 import Login from "./components/login/Login.jsx";
 import Dashboard from "./components/admin/Dashboard.jsx";
-// import DashboardUser from "./components/user/dashboard/DashboarUser.jsx";
-import './app.css';
 import Products from "./components/products/Products.jsx";
 import ProductDetail from "./components/products/productDetail/ProductDetail.jsx";
-
+import './app.css';
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="AppContainer">
-        <Routes>
-          {/* general */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
-
-          {/* admin */}
-          <Route path="/admin" element={<Dashboard />} />
-
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div className="AppContainer">
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/admin" element={<Dashboard />} />
+      </Routes>
+    </div>
   );
 }
 

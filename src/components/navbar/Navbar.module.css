@@ -12,6 +12,7 @@
 
 .logo {
     position: absolute;
+    margin-left: 10px;
     left: 0;
     top: 2;
 }

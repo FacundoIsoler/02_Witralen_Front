@@ -1,13 +1,31 @@
 .container{
-    display: grid;
-    place-items: center;
-    background-color: #F3F3F3;
+    display: flex;
+    background-color: #2D2F35;
 }
+
+/* Mapa */
+.mapContainer {
+    min-width: 50%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.iframe {
+    height: 100%;
+    max-width: 800px;
+    max-height: 600px;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
 
 .contactContainer {
     position: relative;
     width: 100vw;
-    /* height: 100vh; */
     text-align: center;
     min-height: 50vh;
     display: flex;
@@ -17,28 +35,15 @@
     overflow: hidden;
 }
 
-/* Pseudo-elemento para aplicar la capa con opacidad */
-.contactContainer::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-}
-
 /* Título */
 .title {
     display: grid;
     place-items: start;
-    padding: 50px 0;
-    background-color: #2D2F35;
     width: 100%;
 }
 
 .tittleWidth{
-    width: 70%;
+    width: 100%;
     background-color: #E05A00;
     display: grid;
     place-items: center;
@@ -50,7 +55,7 @@
     margin: 0;
 }
 
-.infoSection {
+/* .infoSection {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -59,11 +64,11 @@
     border-radius: 8px;
     width: 80%;
     min-height: 30vh;
-}
+} */
 
 .information,
 .schedule {
-    width: 45%;
+    width: 100%;
 }
 
 .information h3,
@@ -71,6 +76,7 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #E05A00;
 }
 
 .information p,

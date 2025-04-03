@@ -25,9 +25,9 @@ function AboutUs() {
     });
 
     // Verificar si la visibilidad está funcionando correctamente
-    console.log("Text Section Visible:", textVisible);
-    console.log("Vision Section Visible:", visionVisible);
-    console.log("Mission Section Visible:", missionVisible);
+    // console.log("Text Section Visible:", textVisible);
+    // console.log("Vision Section Visible:", visionVisible);
+    // console.log("Mission Section Visible:", missionVisible);
 
     return (
         <div className={styles.aboutUsContainer}>
@@ -37,16 +37,6 @@ function AboutUs() {
                     ref={textRef}
                 >
                     <div className={styles.visionMission}>
-                        <div
-                            className={`${styles.vision} ${visionVisible ? styles.visible : ''}`}
-                            ref={visionRef}
-                            data-aos="zoom-in"
-                        >
-                            <h3 className={styles.heading}>VISIÓN</h3>
-                            <p className={styles.text}>
-                                Ofrecer soluciones EN SEGURIDAD PARA EL MOTOR Y NEUMÁTICOS, CLIMATIZACIÓN, CONTROLES DE VELOCIDAD, para todo tipo de vehículo, de acuerdo con nuestras excelentes competencias y junto a nuestros socios estratégicos, distinguiéndonos en el mercado por ofrecer valor y calidad para que nuestros clientes alcancen el éxito.
-                            </p>
-                        </div>
                         <div
                             className={`${styles.mission} ${missionVisible ? styles.visible : ''}`}
                             ref={missionRef}
