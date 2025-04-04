@@ -73,6 +73,11 @@ function Products() {
 
   const handleDelete = (id) => deleteProduct(id);
 
+  const capitalize = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const handleSaveProduct = async () => {
     if (name.trim() && uploadedImages.length > 0 && category && description && brandId) {
       const imageUrls = uploadedImages.map((id) =>
@@ -81,10 +86,13 @@ function Products() {
           : `https://res.cloudinary.com/alphacode/image/upload/${id}`
       );
 
+      const formattedName = capitalize(name);
+      const formattedDescription = capitalize(description);
+
       if (isEditing && selectedProductId) {
-        await updateProduct(selectedProductId, name, imageUrls, category, description, brandId);
+        await updateProduct(selectedProductId, formattedName, imageUrls, category, formattedDescription, brandId);
       } else {
-        await postProduct(name, imageUrls, category, description, brandId);
+        await postProduct(formattedName, imageUrls, category, formattedDescription, brandId);
       }
 
       handleCloseModal();
@@ -155,7 +163,7 @@ function Products() {
                   type="text"
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="O pega una URL de Cloudinary"
+                  placeholder="Pega una URL de Cloudinary"
                   className={styles.input}
                 />
                 <button
@@ -167,7 +175,7 @@ function Products() {
                   }}
                   className={styles.addBtn}
                 >
-                  Agregar URL
+                  Agregar
                 </button>
               </div>
             )}
