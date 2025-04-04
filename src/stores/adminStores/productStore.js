@@ -12,7 +12,7 @@ const useProductStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.post(
-        `http://localhost:3000/product/showProducts?page=${page}&limit=${limit}`,
+        `https://witralen-back.onrender.com/product/showProducts?page=${page}&limit=${limit}`,
         filters
       );
 
@@ -63,7 +63,7 @@ const useProductStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = 
-      await axios.post("http://localhost:3000/product/newProduct", {
+      await axios.post("https://witralen-back.onrender.com/product/newProduct", {
         name,
         images: Array.isArray(images) ? images : [],
         category,
@@ -100,7 +100,7 @@ const useProductStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.patch(
-        `http://localhost:3000/product/updateProduct/${id}`,
+        `https://witralen-back.onrender.com/product/updateProduct/${id}`,
         { name, images, category, description, brandId }
       );
 
@@ -136,7 +136,7 @@ const useProductStore = create((set, get) => ({
     try {
       console.log("Intentando eliminar este Producto");
 
-      await axios.delete(`http://localhost:3000/product/deleteProduct/${id}`);
+      await axios.delete(`https://witralen-back.onrender.com/product/deleteProduct/${id}`);
 
       set((state) => ({
         products: state.products.filter((product) => product.id !== id),

@@ -12,7 +12,7 @@ const useBrandStore = create((set, get) => ({
       console.log("Intentando obtener las Marcas");
 
       const response = await axios.get(
-        "http://localhost:3000/brand/showBrands"
+        "https://witralen-back.onrender.com/brand/showBrands"
       );
 
       set({ brands: response.data, error: null });
@@ -39,7 +39,7 @@ const useBrandStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.post(
-        "http://localhost:3000/brand/newBrand",
+        "https://witralen-back.onrender.com/brand/newBrand",
         { name, logo }
       );
 
@@ -71,7 +71,7 @@ const useBrandStore = create((set, get) => ({
     try {
       console.log("Intentando eliminar esta Marca");
 
-      await axios.delete(`http://localhost:3000/brand/deleteBrand/${id}`);
+      await axios.delete(`https://witralen-back.onrender.com/brand/deleteBrand/${id}`);
 
       set((state) => ({
         brands: state.brands.filter((brand) => brand.id !== id),
@@ -100,7 +100,7 @@ const useBrandStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.patch(
-        `http://localhost:3000/brand/updateBrand/${id}`,
+        `https://witralen-back.onrender.com/brand/updateBrand/${id}`,
         { name, logo }
       );
 

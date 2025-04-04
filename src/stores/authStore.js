@@ -27,7 +27,7 @@ const useAuthStore = create((set, get) => ({
             console.log("Intentando login con:", { email, password });
 
             const response = await axios.post(
-                "http://localhost:3000/user/authUser",
+                "https://witralen-back.onrender.com/user/authUser",
 
                 {
                     email,

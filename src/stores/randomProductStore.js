@@ -10,7 +10,7 @@ const useRandomProductStore = create((set) => ({
         set({ loading: true, error: null });
         try {
             // Obtener todos los productos
-            const response = await axios.post("http://localhost:3000/product/showProducts");
+            const response = await axios.post("https://witralen-back.onrender.com/product/showProducts");
             const allProducts = response.data.products || [];
 
             // Seleccionar hasta 10 productos al azar

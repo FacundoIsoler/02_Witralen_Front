@@ -66,20 +66,20 @@ function Brands() {
   };
 
   const handleSaveBrand = async () => {
-    if (newBrand.trim() && imageBase64) {
+    if (newBrand.trim()) {
       if (isEditing && selectedBrandId) {
         await updateBrand(selectedBrandId, newBrand, imageBase64);
       } else {
-        await postBrand(newBrand, imageBase64);
+        await postBrand(newBrand, imageBase64); // imageBase64 puede ser vacío y está bien
       }
       setNewBrand("");
-      setSelectedImage(null);
       setImageBase64("");
-      setIsModalOpen(false);
+      setSelectedImage(null);
       setSelectedBrandId(null);
+      setIsModalOpen(false);
     } else {
-      alert("Por favor, ingrese un nombre de marca y seleccione un logo.");
-    }
+      alert("Por favor, ingrese un nombre de marca.");
+    }    
   };
 
   const handleImageChange = (event) => {

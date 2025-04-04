@@ -4,7 +4,6 @@ import useBrandStore from "../../../stores/adminStores/brandStore";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { auto } from "@cloudinary/url-gen/actions/resize";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
-import { AdvancedImage } from "@cloudinary/react";
 import CloudinaryUpload from "../../common/CloudinaryUpload";
 import styles from "./Products.module.css";
 
@@ -22,6 +21,7 @@ function Products() {
   } = useProductStore();
 
   const { brands, brandList } = useBrandStore();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -30,6 +30,8 @@ function Products() {
   const [category, setCategory] = useState("");
   const [brandId, setBrandId] = useState("");
   const [description, setDescription] = useState("");
+  const [uploadMode, setUploadMode] = useState("upload");
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     productList();
@@ -66,6 +68,7 @@ function Products() {
     setName("");
     setCategory("");
     setDescription("");
+    setImageUrl("");
   };
 
   const handleDelete = (id) => deleteProduct(id);
@@ -77,7 +80,6 @@ function Products() {
           ? id
           : `https://res.cloudinary.com/alphacode/image/upload/${id}`
       );
-      
 
       if (isEditing && selectedProductId) {
         await updateProduct(selectedProductId, name, imageUrls, category, description, brandId);
@@ -110,7 +112,7 @@ function Products() {
         {products.map((product) => (
           <div key={product.id} className={styles.productItem}>
             <span>{product.name}</span>
-            {product.images && product.images.map((img, i) => (
+            {product.images?.map((img, i) => (
               <img key={i} src={img} alt={product.name} style={{ width: "50px", height: "50px", marginRight: "5px" }} />
             ))}
             <div className={styles.actions}>
@@ -135,8 +137,40 @@ function Products() {
               className={styles.input}
             />
 
-            <label>Ingresar Imágenes (máximo 5)</label>
-            <CloudinaryUpload uploadedImages={uploadedImages} setUploadedImages={setUploadedImages} />
+            <label>Imágenes (máximo 5)</label>
+            <div className={styles.uploadModeToggle}>
+              <button onClick={() => setUploadMode("upload")} className={uploadMode === "upload" ? styles.activeToggle : ""}>Subir archivo</button>
+              <button onClick={() => setUploadMode("url")} className={uploadMode === "url" ? styles.activeToggle : ""}>Ingresar URL</button>
+            </div>
+
+            {uploadMode === "upload" && (
+              <div className="cloudinary-dropzone">
+                <CloudinaryUpload uploadedImages={uploadedImages} setUploadedImages={setUploadedImages} />
+              </div>
+            )}
+
+            {uploadMode === "url" && (
+              <div className={styles.inputWrapper}>
+                <input
+                  type="text"
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  placeholder="O pega una URL de Cloudinary"
+                  className={styles.input}
+                />
+                <button
+                  onClick={() => {
+                    if (imageUrl) {
+                      setUploadedImages([...uploadedImages, imageUrl]);
+                      setImageUrl("");
+                    }
+                  }}
+                  className={styles.addBtn}
+                >
+                  Agregar URL
+                </button>
+              </div>
+            )}
 
             <label>Ingresar Categoría</label>
             <select
@@ -145,14 +179,12 @@ function Products() {
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value="">Seleccione...</option>
-              <option value="Protector de motor">Protector de motor</option>
-              <option value="Calibrador de neumáticos">Calibrador de neumáticos</option>
-              <option value="Purgador de aire">Purgador de aire</option>
-              <option value="Enfriador ecológico">Enfriador ecológico</option>
-              <option value="Aire acondicionado">Aire acondicionado</option>
-              <option value="Estufa">Estufa</option>
-              <option value="Satelital">Satelital</option>
-              <option value="Monitor de neumáticos">Monitor de neumáticos</option>
+              <option value="Tazas y Aros">Tazas y Aros</option>
+              <option value="Deflectores">Deflectores</option>
+              <option value="Capuchones">Capuchones</option>
+              <option value="Bocinas">Bocinas</option>
+              <option value="Accesorios Varios">Accesorios Varios</option>
+              <option value="Protector de faros">Protector de faros</option>
             </select>
 
             <label>Marca</label>

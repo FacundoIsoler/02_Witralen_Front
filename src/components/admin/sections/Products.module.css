@@ -102,11 +102,13 @@
     padding: 2rem;
     border-radius: 10px;
     width: 100%;
-    max-width: 500px; /* Ajuste del ancho máximo */
+    max-width: 500px; 
     text-align: left;
     color: white;
     position: relative;
     box-sizing: border-box;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .input, .select, .textarea, .uploadBtn {
@@ -206,6 +208,25 @@
     height: 20px;
     cursor: pointer;
 }
+
+.cloudinary-dropzone {
+    border: 2px dashed #999;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #666;
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+    transition: border-color 0.3s, background-color 0.3s;
+    margin: 1rem 0;
+  }
+  
+  .cloudinary-dropzone:hover {
+    border-color: #ED772F;
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
 
 /* Ajustes responsivos */
 @media (max-width: 768px) {

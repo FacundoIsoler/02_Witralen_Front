@@ -10,7 +10,7 @@ export const LOGIN_ADMIN = 'LOGIN_ADMIN'
 export const logInUser = (userData) => {
     return async function (dispatch) {
         try {
-            const response = await axios.post("http://localhost:3000/user/authUser", userData);
+            const response = await axios.post("https://witralen-back.onrender.com/user/authUser", userData);
             return dispatch({
                 type: LOGIN_ADMIN,
                 payload: response.data

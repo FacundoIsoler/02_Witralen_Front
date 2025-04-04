@@ -9,7 +9,7 @@ const useServiceStore = create((set, get) => ({
   serviceList: async (filters = {}) => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.post("http://localhost:3000/service/showServices", filters);
+      const response = await axios.post("https://witralen-back.onrender.com/service/showServices", filters);
 
       set({ services: response.data, error: null });
     } catch (error) {
@@ -32,7 +32,7 @@ const useServiceStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.post(
-        "http://localhost:3000/service/newService",
+        "https://witralen-back.onrender.com/service/newService",
         { name, images, category, description, brandId }
       );
 
@@ -65,7 +65,7 @@ const useServiceStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.patch(
-        `http://localhost:3000/service/updateService/${id}`,
+        `https://witralen-back.onrender.com/service/updateService/${id}`,
         { name, images, category, description, brandId }
       );
 
@@ -101,7 +101,7 @@ const useServiceStore = create((set, get) => ({
     try {
       console.log("Intentando eliminar este Servicio");
 
-      await axios.delete(`http://localhost:3000/service/deleteService/${id}`);
+      await axios.delete(`https://witralen-back.onrender.com/service/deleteService/${id}`);
 
       set((state) => ({
         services: state.services.filter((service) => service.id !== id),

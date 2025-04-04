@@ -2,9 +2,8 @@
     display: grid;
     place-items: center;
     min-width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
     background: linear-gradient(180deg, #FFFFFF 0%, #ED772F 100%);
-    padding: 20px;
     box-sizing: border-box;
 }
 
