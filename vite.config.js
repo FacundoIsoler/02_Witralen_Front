@@ -10,4 +10,5 @@ export default defineConfig({
       autoInstall: true,
     }),],
     base: './',
+    
 })
