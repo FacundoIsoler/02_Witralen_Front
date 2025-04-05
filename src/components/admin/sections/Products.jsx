@@ -188,6 +188,7 @@ function Products() {
             >
               <option value="">Seleccione...</option>
               <option value="Tazas y Aros">Tazas y Aros</option>
+              <option value="Capuchones">Capuchones</option>
               <option value="Deflectores">Deflectores</option>
               <option value="Capuchones">Capuchones</option>
               <option value="Bocinas">Bocinas</option>

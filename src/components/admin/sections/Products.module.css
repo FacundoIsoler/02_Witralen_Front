@@ -226,6 +226,33 @@
     background-color: #f1f1f1;
     cursor: pointer;
   }
+
+  .uploadModeToggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .uploadModeToggle button {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    color: #ED772F;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  .uploadModeToggle button:hover {
+    background-color: #ffe5d1;
+  }
+  
+  .uploadModeToggle .activeToggle {
+    background-color: #ED772F;
+    color: white;
+  }
+  
   
 
 /* Ajustes responsivos */
