@@ -9,4 +9,5 @@ export default defineConfig({
       compiler: 'jsx',
       autoInstall: true,
     }),],
+    base: '/',
 })
