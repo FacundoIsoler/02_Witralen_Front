@@ -1,26 +1,26 @@
 import React, { useEffect } from "react";
 import useProductStore from "../../../stores/adminStores/productStore";
-import useServiceStore from "../../../stores/adminStores/serviceStore";
+// import useServiceStore from "../../../stores/adminStores/serviceStore";
 import styles from "./ProductGrid.module.css";
 import { useNavigate } from "react-router-dom";
 
 const ProductGrid = () => {
     const { products, loading, error, productList } = useProductStore();
-    const { services, serviceList, loading: serviceLoading, error: serviceError } = useServiceStore();
+    // const { services, serviceList, loading: serviceLoading, error: serviceError } = useServiceStore();
     const navigate = useNavigate();
 
     useEffect(() => {
         productList();
-        serviceList();
-    }, [productList, serviceList]);
+        // serviceList();
+    }, [productList]);
 
     const handleProductClick = (product) => {
         navigate(`/products/${product.id}`, { state: { product } });
     };
 
-    const handleServiceClick = (service) => {
-        navigate(`/services/${service.id}`, { state: { service } });
-    };
+    // const handleServiceClick = (service) => {
+    //     navigate(`/services/${service.id}`, { state: { service } });
+    // };
 
     return (
         <div className={styles.container}>
@@ -32,25 +32,28 @@ const ProductGrid = () => {
             ) : (
                 <div className={styles.grid}>
                     {products.map((product) => (
-                        <div
-                            key={product.id}
-                            className={styles.productCard}
-                            onClick={() => handleProductClick(product)}
-                        >
-                            <img
-                                src={
-                                    Array.isArray(product.images)
-                                        ? product.images[0]
-                                        : product.image || "https://via.placeholder.com/150"
-                                }
-                                alt={product.name}
-                            />
+                        <div className={styles.productCard} onClick={() => handleProductClick(product)}>
+                            <div className={styles.imageWrapper}>
+                                <img
+                                    src={product.images?.[0] || product.image || "https://via.placeholder.com/150"}
+                                    alt={product.name}
+                                />
+                                <div className={styles.overlay}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                                        <circle cx="11" cy="11" r="8" />
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                    </svg>
+                                </div>
+
+
+                            </div>
                             <p className={styles.productName}>{product.name}</p>
                         </div>
+
                     ))}
                 </div>
             )}
-            <h2>Servicios</h2>
+            {/* <h2>Servicios</h2>
             {serviceLoading ? (
                 <div>Cargando Servicios...</div>
             ) : serviceError ? (
@@ -75,7 +78,7 @@ const ProductGrid = () => {
                         </div>
                     ))}
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
