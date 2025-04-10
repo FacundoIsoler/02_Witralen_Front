@@ -16,6 +16,15 @@ const Navbar = () => {
         setIsMenuOpen(false); // cerramos menú en mobile después de click
     };
 
+    const handleScrollToContact = () => {
+        const contactSection = document.getElementById("contact"); 
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: "smooth", block: 'start' });
+            setIsMenuOpen(false);
+        }
+    }
+    
+
     return (
         <nav className={s.navbar}>
             <div className={s.logo} onClick={() => goTo("/")}>
@@ -24,6 +33,7 @@ const Navbar = () => {
             <ul className={s.navLinks}>
                 <li className={s.navItem} onClick={() => goTo("/")}>Home</li>
                 <li className={s.navItem} onClick={() => goTo("/products")}>Catálogo</li>
+                <li className={s.navItem} onClick={handleScrollToContact}>Contacto</li>
             </ul>
             <div className={s.menuToggle} onClick={toggleMenu}>
                 <span className={s.menuIcon}></span>
@@ -33,8 +43,10 @@ const Navbar = () => {
             {isMenuOpen && (
                 <div className={s.mobileMenu}>
                     <ul className={s.mobileNavLinks}>
-                        <li className={s.navItem} onClick={() => goTo("/")}>Home</li>
-                        <li className={s.navItem} onClick={() => goTo("/products")}>Catálogo</li>
+                        <li className={s.navItemCelular} onClick={() => goTo("/")}>Home</li>
+                        <li className={s.navItemCelular} onClick={() => goTo("/products")}>Catálogo</li>
+                        <li className={s.navItemCelular} onClick={handleScrollToContact}>Contacto</li>
+
                     </ul>
                 </div>
             )}

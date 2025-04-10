@@ -24,8 +24,8 @@
 .rectangle {
     background-color: rgba(0, 0, 0, 0.85);
     padding: 10px;
-    width: 150px;
-    height: 80px;
+    width: 250px;
+    height: 120px;
     border-radius: 10px;
     position: absolute;
     bottom: 20px;

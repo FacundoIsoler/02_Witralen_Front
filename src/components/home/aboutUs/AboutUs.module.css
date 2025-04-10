@@ -2,17 +2,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px 0;
     background-color: #F3F3F3;
     width: 100%;
     height: auto;
-    margin: 0;
 }
 
 .content {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 50px;
+    width: 100%;
+}
+
+.visionMission {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .textSection {
@@ -21,9 +28,7 @@
     max-width: 70%;
     opacity: 0;
     text-align: center;
-    margin: 20px 0;
     justify-content: center;
-    transform: translateY(50px);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
@@ -39,35 +44,44 @@
     font-style: normal;
     letter-spacing: 3px;
     font-size: 80px !important;
-
+    margin-bottom: 0;
 }
 
-.text {
+.embudoText{
+    margin: 2rem auto;
+}
+
+.embudoText p {
     font-family: 'Montserrat', sans-serif;
     font-size: 20px !important;
     text-align: center !important;
-}
-
-.vision.visible,
-.mission.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-
-.vision h3,
-.mission h3 {
-    font-size: 26px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.vision p,
-.mission p {
-    font-size: 16px;
     line-height: 1.8;
-    color: #555;
-    margin: 0;
-    text-align: justify;
+    margin: 0 auto;
+    font-size: 18px;
+    color: black;
+}
+
+.l1 {
+    max-width: 80ch;
+}
+
+.l2 {
+    max-width: 60ch;
+    margin-bottom: 1rem !important;
+}
+
+.l3 {
+    max-width: 80ch;
+}
+
+
+.contactButton{
+    background-color: #ff6f00;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }

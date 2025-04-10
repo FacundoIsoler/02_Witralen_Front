@@ -15,45 +15,34 @@
     background-color: #E05A00;
 }
 
-.slider::before,
-.slider::after {
-    position: absolute;
-    content: "";
-    height: 100%;
-    width: var(--logo-width);
-    z-index: 1;
-}
-/* 
-.slider::before {
-    left: 0;
-    background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
-}
-
-.slider::after {
-    right: 0;
-    background: linear-gradient(to left, #fff 0%, rgba(255, 255, 255, 0) 100%);
-} */
-
 .brands {
-    list-style: none;
-    width: var(--total-logo-width);
     display: flex;
-    animation: slideLeft var(--animation-duration) linear infinite;
+    width: max-content;
+    animation: scrollLoop linear infinite;
+    animation-duration: 50s;
 }
 
-@keyframes slideLeft {
-    100% {
-        transform: translateX(calc(-100% / 2));
+@keyframes scrollLoop {
+    from {
+        transform: translateX(0%);
+    }
+
+    to {
+        transform: translateX(-50%);
     }
 }
 
 .brandLogo {
-    width: var(--logo-width);
-    text-align: center;
-    margin-left: 3rem;
+    flex: 0 0 auto;
+    /* no se estira */
+    width: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .brandLogo img {
     width: 8rem;
     height: 8rem;
+    object-fit: contain;
 }

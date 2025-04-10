@@ -41,6 +41,31 @@ function CarrouselMarca() {
                             <img src={logo} alt={`Duplicate Logo ${index}`} />
                         </li>
                     ))}
+                    {logos.map((logo, index) => (
+                        <li key={`duplicate-${index}`} className={s.brandLogo}>
+                            <img src={logo} alt={`Duplicate Logo ${index}`} />
+                        </li>
+                    ))}
+                    {logos.map((logo, index) => (
+                        <li key={`duplicate-${index}`} className={s.brandLogo}>
+                            <img src={logo} alt={`Duplicate Logo ${index}`} />
+                        </li>
+                    ))}
+                    {logos.map((logo, index) => (
+                        <li key={`duplicate-${index}`} className={s.brandLogo}>
+                            <img src={logo} alt={`Duplicate Logo ${index}`} />
+                        </li>
+                    ))}
+                    {logos.map((logo, index) => (
+                        <li key={`duplicate-${index}`} className={s.brandLogo}>
+                            <img src={logo} alt={`Duplicate Logo ${index}`} />
+                        </li>
+                    ))}
+                    {logos.map((logo, index) => (
+                        <li key={`duplicate-${index}`} className={s.brandLogo}>
+                            <img src={logo} alt={`Duplicate Logo ${index}`} />
+                        </li>
+                    ))}
                 </ul>
             </div>
         </section>
