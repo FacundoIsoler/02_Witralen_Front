@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useBrandStore from "../../../stores/adminStores/brandStore";
 import useProductStore from "../../../stores/adminStores/productStore";
 import useRandomProductStore from "../../../stores/randomProductStore";
-import useServiceStore from "../../../stores/adminStores/serviceStore";
+// import useServiceStore from "../../../stores/adminStores/serviceStore";
 import styles from "./Sidebar.module.css";
 
 const Sidebar = () => {
@@ -25,12 +25,12 @@ const Sidebar = () => {
     getCategories: state.getCategories,
   }));
 
-  const { services, serviceList, loading: serviceLoading, error: serviceError } = useServiceStore((state) => ({
-    services: state.services,
-    serviceList: state.serviceList,
-    loading: state.loading,
-    error: state.error,
-  }));
+  // const { services, serviceList, loading: serviceLoading, error: serviceError } = useServiceStore((state) => ({
+  //   services: state.services,
+  //   serviceList: state.serviceList,
+  //   loading: state.loading,
+  //   error: state.error,
+  // }));
 
   const {
     randomProducts,
@@ -49,10 +49,10 @@ const Sidebar = () => {
       await brandList();
       await fetchRandomProducts();
       getCategories();
-      serviceList(); // Load services
+      // serviceList(); 
     }
     initializeSidebar();
-  }, [brandList, fetchRandomProducts, getCategories, serviceList]);
+  }, [brandList, fetchRandomProducts, getCategories]);
 
   const applyFilters = (category, brandId) => {
     const filters = {};
@@ -63,13 +63,13 @@ const Sidebar = () => {
     navigate("/products", { state: { filterType: "mixed", filters } });
   };
 
-  const applyServiceFilters = (brandId) => {
-    const filters = {};
-    if (brandId && brandId !== "all") filters.brandId = brandId;
+  // const applyServiceFilters = (brandId) => {
+  //   const filters = {};
+  //   if (brandId && brandId !== "all") filters.brandId = brandId;
 
-    serviceList(filters);
-    navigate("/services", { state: { filterType: "services", filters } });
-  };
+  //   serviceList(filters);
+  //   navigate("/services", { state: { filterType: "services", filters } });
+  // };
 
   const handleBrandClick = (brandId) => {
     setSelectedBrand(brandId);
@@ -91,15 +91,15 @@ const Sidebar = () => {
     applyFilters(selectedCategory, "all");
   };
 
-  const handleServiceBrandClick = (brandId) => {
-    setSelectedBrand(brandId);
-    serviceList({ brandId });
-  };
+  // const handleServiceBrandClick = (brandId) => {
+  //   setSelectedBrand(brandId);
+  //   serviceList({ brandId });
+  // };
 
-  const handleAllServicesClick = () => {
-    setSelectedBrand("all");
-    applyServiceFilters("all");
-  };
+  // const handleAllServicesClick = () => {
+  //   setSelectedBrand("all");
+  //   applyServiceFilters("all");
+  // };
 
   const handleProductClick = (product) => {
     navigate(`/products/${product.id}`, { state: { product } });
@@ -157,7 +157,7 @@ const Sidebar = () => {
           ))}
         </ul>
       )}
-      <h2 className={styles.categoryTittle}>Servicios</h2>
+      {/* <h2 className={styles.categoryTittle}>Servicios</h2>
       {serviceLoading ? (
         <p>Cargando servicios...</p>
       ) : serviceError ? (
@@ -184,7 +184,7 @@ const Sidebar = () => {
             </li>
           ))}
         </ul>
-      )}
+      )} */}
       <h2 className={styles.categoryTittle}>Productos Recomendados</h2>
       {randomLoading ? (
         <p>Cargando productos...</p>

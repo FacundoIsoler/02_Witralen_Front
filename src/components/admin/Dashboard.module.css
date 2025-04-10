@@ -1,68 +1,67 @@
+/* Contenedor principal */
 .container {
-    display: grid;
-    place-items: center;
-    min-width: 100vw;
-    height: 100vh;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    min-height: 100vh;
     background: linear-gradient(180deg, #FFFFFF 0%, #ED772F 100%);
     box-sizing: border-box;
+    overflow-y: auto;
+    /* Scroll si hay más contenido */
+    padding: 2rem 1rem;
+    /* Separación del borde */
 }
 
+/* Wrapper general de la grilla */
 .wrapper {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Tres columnas iguales */
-    grid-template-rows: auto;
-    gap: 60px; /* Espaciado uniforme entre los elementos */
+    grid-template-columns: 2fr 1fr;
+    /* Productos más ancho que Brands */
+    gap: 60px;
     width: 100%;
     max-width: 1200px;
 }
 
-/* Secciones principales */
+/* Sección de Productos */
 .one {
-    grid-column: 1 / 3; /* Ocupa las dos primeras columnas */
-    grid-row: 1 / 2; /* Primera fila */
+    grid-column: 1 / 2;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-.two {
-    grid-column: 1 / 3; /* Ocupa las dos primeras columnas */
-    grid-row: 2 / 3; /* Segunda fila */
-}
 
+/* Sección de Marcas */
 .three {
-    grid-column: 3 / 4; /* Tercera columna */
-    grid-row: 1 / 3; /* Ocupa la primera y segunda fila */
+    grid-column: 2 / 3;
 }
 
-/* Ajustes responsivos */
+/* Responsivo tablet */
 @media (max-width: 1024px) {
     .wrapper {
-        grid-template-columns: 1fr 1fr; /* Cambia a dos columnas */
-        gap: 15px;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
     }
 
     .one {
-        grid-column: 1 / 3; /* Ocupa ambas columnas */
-        grid-row: 1 / 2;
-    }
-
-    .two {
-        grid-column: 1 / 2; /* Primera columna */
-        grid-row: 2 / 3;
+        grid-column: 1 / 2;
     }
 
     .three {
-        grid-column: 2 / 3; /* Segunda columna */
-        grid-row: 2 / 3;
+        grid-column: 2 / 3;
     }
 }
 
+/* Responsivo mobile */
 @media (max-width: 768px) {
     .wrapper {
-        grid-template-columns: 1fr; /* Cambia a una sola columna */
-        gap: 15px;
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    .one, .two, .three {
-        grid-column: 1 / 2; /* Ocupa toda la columna */
-        grid-row: auto; /* Ajusta la posición automáticamente */
+    .one,
+    .three {
+        grid-column: 1 / 2;
     }
 }

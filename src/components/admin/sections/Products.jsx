@@ -6,19 +6,27 @@ import { auto } from "@cloudinary/url-gen/actions/resize";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import CloudinaryUpload from "../../common/CloudinaryUpload";
 import styles from "./Products.module.css";
+import { useInView } from 'react-intersection-observer';
+
 
 const cld = new Cloudinary({ cloud: { cloudName: "alphacode" } });
 
 function Products() {
   const {
     products,
-    productList,
+    getProducts,
+    hasMore,
+    currentPage,
     postProduct,
     updateProduct,
     deleteProduct,
     loading,
     error,
   } = useProductStore();
+
+  const [ref, inView] = useInView({
+    threshold: 1,
+  });
 
   const { brands, brandList } = useBrandStore();
 
@@ -34,8 +42,14 @@ function Products() {
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
-    productList();
-  }, [productList]);
+    getProducts(1);
+  }, []);
+
+  useEffect(() => {
+    if (inView && hasMore) {
+      getProducts(currentPage + 1);
+    }
+  }, [inView, hasMore, currentPage]);
 
   const handleAddProduct = () => {
     setIsModalOpen(true);
@@ -129,6 +143,8 @@ function Products() {
             </div>
           </div>
         ))}
+          {hasMore && <div ref={ref} className={styles.scrollLoader}>Cargando más...</div>}
+
       </div>
 
       {isModalOpen && (

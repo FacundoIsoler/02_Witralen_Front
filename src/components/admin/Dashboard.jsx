@@ -3,7 +3,7 @@ import styles from './Dashboard.module.css'
 
 //Components
 import Products from './sections/Products'
-import Services from './sections/Services'
+// import Services from './sections/Services'
 import Brands from './sections/Brands'
 
 function Dashboard() {
@@ -13,9 +13,9 @@ function Dashboard() {
                 <div className={styles.one}>
                     <Products />
                 </div>
-                <div className={styles.two}>
+                {/* <div className={styles.two}>
                     <Services />
-                </div>
+                </div> */}
                 <div className={styles.three}>
                     <Brands />
                 </div>

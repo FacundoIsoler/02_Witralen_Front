@@ -7,6 +7,24 @@ const useProductStore = create((set, get) => ({
   brands: [],
   loading: false,
   error: null,
+  currentPage: 1,
+  hasMore: true,
+
+  getProducts: async (page = 1, limit = 10) => {
+    try {
+      const res = await axios.post(`https://witralen-back.onrender.com/product/showProducts?page=${page}&limit=${limit}`);
+      const data = res.data;
+  
+      set((state) => ({
+        products: page === 1 ? data.products : [...state.products, ...data.products],
+        hasMore: data.hasMore,
+        currentPage: page,
+      }));
+    } catch (err) {
+      console.error("Error al obtener productos:", err);
+      set({ error: "Error al obtener productos." });
+    }
+  },
 
   productList: async (filters = {}, page = 1, limit = 10) => {
     set({ loading: true, error: null });
@@ -21,6 +39,7 @@ const useProductStore = create((set, get) => ({
         hasMore: response.data.hasMore,
         error: null,
       });
+      console.log({"Productos obtenidos exitosamente": response.data.products});
     } catch (error) {
       if (error.response) {
         console.error("Error al obtener productos:", error.response.data);
