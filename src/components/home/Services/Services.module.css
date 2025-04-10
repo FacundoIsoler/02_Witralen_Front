@@ -8,38 +8,44 @@
     max-width: 100%;
 }
 
-/* Título */
 .title {
-    display: grid;
-    place-items: end;
-    padding: 50px 0;
     background-color: #2D2F35;
     width: 100%;
-}
-
-.tittleWidth{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px; /* eliminamos padding global */
+  }
+  
+  .tittleWidth {
     width: 100%;
+    height: 120px; /* ajustá según tamaño del título */
     background-color: #E05A00;
-}
-
-.title h3 {
-    color: #333;
-    font-family: "Bebas Neue" !important;
-    font-weight: 400 !important;
-    font-style: normal !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center;
+  }
+  
+  .title h3 {
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
     letter-spacing: 3px;
-    font-size: 80px !important;
-    margin: 0;
+    font-size: 80px;
     color: white;
-}
-
-
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    text-align: center;
+  }
+  
 /* Servicios */
 .services {
     display: flex;
     flex-direction: column;
     width: 70%;
     max-width: 90vw;
+    margin: 5rem;
 }
 
 /* Elemento de servicio */
@@ -51,7 +57,7 @@
 
 /* Disposición alternada */
 .alternateLeft {
-    flex-direction: row; 
+    flex-direction: row;
 }
 
 .alternateRight {
@@ -66,7 +72,7 @@
     object-fit: contain;
 }
 
-.textContainer1Tittle{
+.textContainer1Tittle {
     margin: 0;
 }
 
@@ -84,7 +90,7 @@
     margin-right: 3rem;
 }
 
-.textContainer2{
+.textContainer2 {
     flex: 1;
     text-align: end;
     color: #000;
@@ -102,7 +108,7 @@
 
 }
 
-.textContainer3Tittle{
+.textContainer3Tittle {
     margin: 0;
 }
 
@@ -124,5 +130,3 @@
     margin-right: 3rem;
 
 }
-
-

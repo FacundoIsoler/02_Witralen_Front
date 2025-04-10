@@ -48,8 +48,8 @@ function AboutUs() {
                             <h3 className={styles.heading}>QUIENES SOMOS</h3>
                             <div className={styles.embudoText}>
                                 <p className={styles.l1}>Nuestra misión es ser la solución de confianza en la instalación,reparación y mantenimiento de sistemas de seguridad para el motor y neumáticos (VIGIA),climatización (VIESA),</p>
-                                <p className={styles.l2}> Tacógrafos (FUL-MAR; VDO; RUTATROL),Satelital (GESTYA); Solución en sistema ad-blue y potenciado (Reprogramación),Scaneo y borrado de fallas, Instrumental (Aceite, aire, temperatura, etc).</p>
-                                <p className={styles.l3}>Nos comprometemos a ofrecer un diagnóstico rápido y profesional,reduciendo los tiempos de inutilización de vehículos y aumentando su rentabilidad.</p>
+                                <p className={styles.l2}> Tacógrafos (FUL-MAR; VDO; RUTATROL),Satelital (GESTYA); Solución en sistema ad-blue y potenciado (Reprogramación),Scaneo y borrado de fallas, Instrumental (Aceite, aire, temperatura, etc). Nos comprometemos a ofrecer un diagnóstico rápido y profesional,reduciendo los tiempos de inutilización de vehículos y aumentando su rentabilidad.</p>
+                                <p className={styles.l3}></p>
                             </div>
                             <button className={styles.contactButton} onClick={handleContactButton}>Contacto</button>
 
