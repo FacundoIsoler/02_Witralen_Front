@@ -1,17 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../sidebar/Sidebar';
-import SearchBar from '../searchBar/SearchBar';
 import styles from './ProductDetail.module.css';
+import useBrandStore from '../../../stores/adminStores/brandStore';
+
 
 const ProductDetail = () => {
     const location = useLocation();
-    const { product } = location.state || {}; // Retrieve product data
+    const { product } = location.state || {};
+    const { brands, brandList } = useBrandStore();
 
-    // Estado para la imagen principal seleccionada
+
     const [selectedImage, setSelectedImage] = useState(
         Array.isArray(product?.images) ? product.images[0] : product?.image || 'https://via.placeholder.com/300'
     );
+
+    useEffect(() => {
+        if (product) {
+            const firstImage = Array.isArray(product.images)
+                ? product.images[0]
+                : product.image || 'https://via.placeholder.com/300';
+            setSelectedImage(firstImage);
+        }
+
+        // Traer marcas
+        brandList();
+    }, [product, brandList]);
+
+    const brandName = brands.find((b) => b.id === product.brandId)?.name || 'N/A';
 
     if (!product) {
         return <div>Producto no encontrado</div>;
@@ -23,7 +39,6 @@ const ProductDetail = () => {
             <div className={styles.content}>
                 <div className={styles.detailContainer}>
                     <div className={styles.leftSection}>
-                        {/* Imagen principal */}
                         <img
                             className={styles.mainImage}
                             src={selectedImage}
@@ -31,9 +46,7 @@ const ProductDetail = () => {
                         />
                         <div className={styles.brandContainer}>
                             <span className={styles.brandLabel}>Marca</span>
-                            {console.log(product)}
-                            <span className={styles.brandName}>{product.brandId
-                                || 'N/A'}</span>
+                            <span className={styles.brandName}>{brandName}</span>
                         </div>
                     </div>
                     <div className={styles.rightSection}>

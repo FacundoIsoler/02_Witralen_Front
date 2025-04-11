@@ -14,9 +14,9 @@ const SearchBar = () => {
 
   return (
     <div className={styles.searchBar}>
-      <select className={styles.filter}>
+      {/* <select className={styles.filter}>
         <option value="filtro">Filtro</option>
-      </select>
+      </select> */}
       <input
         type="text"
         placeholder="Buscar..."

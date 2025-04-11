@@ -24,35 +24,39 @@ const ProductGrid = () => {
 
     return (
         <div className={styles.container}>
-            <h2>Productos</h2>
-            {loading ? (
-                <div>Cargando Productos...</div>
-            ) : error ? (
-                <div>Error: {error}</div>
-            ) : (
-                <div className={styles.grid}>
-                    {products.map((product) => (
-                        <div className={styles.productCard} onClick={() => handleProductClick(product)}>
-                            <div className={styles.imageWrapper}>
-                                <img
-                                    src={product.images?.[0] || product.image || "https://via.placeholder.com/150"}
-                                    alt={product.name}
-                                />
-                                <div className={styles.overlay}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                                        <circle cx="11" cy="11" r="8" />
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                                    </svg>
+            <div className={styles.gridContainer}>
+
+                <h2>Productos</h2>
+                {loading ? (
+                    <div>Cargando Productos...</div>
+                ) : error ? (
+                    <div>Error: {error}</div>
+                ) : (
+                    <div className={styles.grid}>
+                        {products.map((product) => (
+                            <div className={styles.productCard} onClick={() => handleProductClick(product)}>
+                                <div className={styles.imageWrapper}>
+                                    <img
+                                        src={product.images?.[0] || product.image || "https://via.placeholder.com/150"}
+                                        alt={product.name}
+                                    />
+                                    <div className={styles.overlay}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                                            <circle cx="11" cy="11" r="8" />
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                        </svg>
+                                    </div>
+
+
                                 </div>
-
-
+                                <p className={styles.productName}>{product.name}</p>
                             </div>
-                            <p className={styles.productName}>{product.name}</p>
-                        </div>
 
-                    ))}
-                </div>
-            )}
+                        ))}
+                    </div>
+                )}
+            </div>
+
             {/* <h2>Servicios</h2>
             {serviceLoading ? (
                 <div>Cargando Servicios...</div>
